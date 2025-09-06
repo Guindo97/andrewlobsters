@@ -7,8 +7,8 @@ const Footer = ({ t, setCurrentSection }) => {
         <div className="grid md:grid-cols-3 gap-8">
           {/* Company Info */}
           <div>
-            <div className="flex items-center space-x-2 mb-4">
-              <img src="/images/andrew.jpg" alt="Andrew's Lobsters" className="w-12 h-12 rounded-full object-cover" />
+            <div className="flex items-center space-x-4 mb-4">
+              <img src="/images/andrew.jpg" alt="Andrew's Lobsters" className="w-28 h-28 rounded-full object-cover border-4 border-blue-500 shadow-2xl" />
               <h3 className="text-2xl font-bold">Andrew's Lobsters</h3>
             </div>
             <p className="text-gray-300 mb-4">

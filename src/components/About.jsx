@@ -19,22 +19,33 @@ const About = ({ t }) => {
           </p>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="bg-blue-50 p-6 rounded-xl">
+            <a 
+              href="https://maps.google.com/maps?q=1206+Pabineau+Falls+Road,+Bathurst,+NB" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="bg-blue-50 p-6 rounded-xl hover:bg-blue-100 transition-colors cursor-pointer"
+            >
               <i className="fas fa-map-marker-alt text-3xl text-blue-600 mb-4"></i>
               <p className="text-sm text-gray-700">{t.info.location}</p>
-            </div>
-            <div className="bg-blue-50 p-6 rounded-xl">
-              <i className="fas fa-phone text-3xl text-blue-600 mb-4"></i>
+            </a>
+            <a 
+              href="tel:+15066555599" 
+              className="bg-green-50 p-6 rounded-xl hover:bg-green-100 transition-colors cursor-pointer"
+            >
+              <i className="fas fa-phone text-3xl text-green-600 mb-4"></i>
               <p className="text-sm text-gray-700">{t.info.phone}</p>
-            </div>
-            <div className="bg-blue-50 p-6 rounded-xl">
-              <i className="fas fa-clock text-3xl text-blue-600 mb-4"></i>
+            </a>
+            <div className="bg-yellow-50 p-6 rounded-xl">
+              <i className="fas fa-clock text-3xl text-yellow-600 mb-4"></i>
               <p className="text-sm text-gray-700">{t.info.hours}</p>
             </div>
-            <div className="bg-blue-50 p-6 rounded-xl">
-              <i className="fas fa-envelope text-3xl text-blue-600 mb-4"></i>
+            <a 
+              href="mailto:andrewslobster@gmail.com" 
+              className="bg-red-50 p-6 rounded-xl hover:bg-red-100 transition-colors cursor-pointer"
+            >
+              <i className="fas fa-envelope text-3xl text-red-600 mb-4"></i>
               <p className="text-sm text-gray-700">{t.info.email}</p>
-            </div>
+            </a>
           </div>
         </div>
       </div>

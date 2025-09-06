@@ -61,21 +61,35 @@ const Contact = ({ t }) => {
             <div className="bg-white rounded-2xl p-8 shadow-xl">
               <h3 className="text-2xl font-bold text-blue-900 mb-6">Visit Us</h3>
               <div className="space-y-4">
-                <div className="flex items-center space-x-3">
+                <a 
+                  href="https://maps.google.com/maps?q=1206+Pabineau+Falls+Road,+Bathurst,+NB" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-lg transition-colors cursor-pointer"
+                >
                   <i className="fas fa-map-marker-alt text-blue-600"></i>
-                  <span>1206 Pabineau Falls Road, Bathurst, NB</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <i className="fas fa-phone text-blue-600"></i>
-                  <span>(506) 655-5599</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <i className="fas fa-envelope text-blue-600"></i>
-                  <span>andrewslobster@gmail.com</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <i className="fas fa-clock text-blue-600"></i>
-                  <span>Monday–Saturday: Until we sell out!</span>
+                  <span className="text-gray-700">1206 Pabineau Falls Road, Bathurst, NB</span>
+                </a>
+                
+                <a 
+                  href="tel:+15066555599" 
+                  className="flex items-center space-x-3 hover:bg-green-50 p-2 rounded-lg transition-colors cursor-pointer"
+                >
+                  <i className="fas fa-phone text-green-600"></i>
+                  <span className="text-gray-700">(506) 655-5599</span>
+                </a>
+                
+                <a 
+                  href="mailto:andrewslobster@gmail.com" 
+                  className="flex items-center space-x-3 hover:bg-red-50 p-2 rounded-lg transition-colors cursor-pointer"
+                >
+                  <i className="fas fa-envelope text-red-600"></i>
+                  <span className="text-gray-700">andrewslobster@gmail.com</span>
+                </a>
+                
+                <div className="flex items-center space-x-3 p-2">
+                  <i className="fas fa-clock text-yellow-600"></i>
+                  <span className="text-gray-700">Monday–Saturday: Until we sell out!</span>
                 </div>
               </div>
             </div>
