@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Map from './Map';
 
 const Contact = ({ t }) => {
   const [formData, setFormData] = useState({
@@ -81,11 +82,11 @@ const Contact = ({ t }) => {
             
             <div className="bg-white rounded-2xl p-8 shadow-xl">
               <h3 className="text-2xl font-bold text-blue-900 mb-6">Location Map</h3>
-              <div className="bg-blue-50 rounded-lg p-8 text-center">
-                <i className="fas fa-map text-4xl text-blue-600 mb-4"></i>
-                <p className="text-gray-700">Interactive map would be embedded here</p>
-                <p className="text-sm text-gray-500 mt-2">1206 Pabineau Falls Road, Bathurst, NB</p>
+              <div className="mb-4">
+                <p className="text-gray-700 mb-2">Find us at:</p>
+                <p className="text-sm text-gray-500">1206 Pabineau Falls Road, Bathurst, NB</p>
               </div>
+              <Map />
             </div>
             
             <div className="bg-white rounded-2xl p-8 shadow-xl">
