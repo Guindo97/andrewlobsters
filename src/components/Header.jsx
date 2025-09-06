@@ -17,9 +17,9 @@ const Header = ({ currentSection, setCurrentSection, language, setLanguage, cart
     <header className="fixed top-0 w-full bg-white/95 backdrop-blur-sm shadow-lg z-50">
       <div className="container mx-auto px-4 py-4">
         <div className="flex justify-between items-center">
-          <div className="flex items-center space-x-4">
-            <img src="/images/andrew.jpg" alt="Andrew's Lobsters" className="w-24 h-24 rounded-full object-cover border-4 border-blue-400 shadow-xl" />
-            <h1 className="text-2xl font-bold text-blue-900">Andrew's Lobsters</h1>
+          <div className="flex items-center space-x-2 md:space-x-4">
+            <img src="/images/andrew.jpg" alt="Andrew's Lobsters" className="w-16 h-16 md:w-24 md:h-24 rounded-full object-cover border-2 md:border-4 border-blue-400 shadow-lg md:shadow-xl" />
+            <h1 className="text-lg md:text-2xl font-bold text-blue-900">Andrew's Lobsters</h1>
           </div>
           
           {/* Desktop Navigation */}

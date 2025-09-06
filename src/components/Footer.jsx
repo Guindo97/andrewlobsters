@@ -7,9 +7,9 @@ const Footer = ({ t, setCurrentSection }) => {
         <div className="grid md:grid-cols-3 gap-8">
           {/* Company Info */}
           <div>
-            <div className="flex items-center space-x-4 mb-4">
-              <img src="/images/andrew.jpg" alt="Andrew's Lobsters" className="w-28 h-28 rounded-full object-cover border-4 border-blue-500 shadow-2xl" />
-              <h3 className="text-2xl font-bold">Andrew's Lobsters</h3>
+            <div className="flex items-center space-x-2 md:space-x-4 mb-4">
+              <img src="/images/andrew.jpg" alt="Andrew's Lobsters" className="w-20 h-20 md:w-28 md:h-28 rounded-full object-cover border-2 md:border-4 border-blue-500 shadow-xl md:shadow-2xl" />
+              <h3 className="text-lg md:text-2xl font-bold">Andrew's Lobsters</h3>
             </div>
             <p className="text-gray-300 mb-4">
               Fresh, locally caught lobster — cooked daily and ready to enjoy. 

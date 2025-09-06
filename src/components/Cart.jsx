@@ -271,12 +271,18 @@ const Cart = ({ cartItems, updateCartItem, removeFromCart, setCurrentSection, t 
                 
                 <div className="flex items-center space-x-4">
                   <div className="flex items-center space-x-2">
-                    <button
-                      onClick={() => updateCartItem(item.id, Math.max(1, item.quantity - 1))}
-                      className="bg-gray-200 hover:bg-gray-300 w-8 h-8 rounded-full flex items-center justify-center"
-                    >
-                      -
-                    </button>
+                                            <button
+                                              onClick={() => {
+                                                if (item.quantity <= 1) {
+                                                  removeFromCart(item.id);
+                                                } else {
+                                                  updateCartItem(item.id, item.quantity - 1);
+                                                }
+                                              }}
+                                              className="bg-gray-200 hover:bg-gray-300 w-8 h-8 rounded-full flex items-center justify-center"
+                                            >
+                                              -
+                                            </button>
                     <span className="w-12 text-center font-semibold">{item.quantity}</span>
                     <button
                       onClick={() => updateCartItem(item.id, item.quantity + 1)}

@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 
 const Gallery = ({ t }) => {
   const [photos, setPhotos] = useState([
-    { id: 1, url: '🦞', caption: 'Fresh Lobster' },
-    { id: 2, url: '🚤', caption: 'Waymaker Boat' },
+    { id: 1, url: '/images/homard.jpg', caption: 'Fresh Lobster' },
+    { id: 2, url: '/images/waymaker.jpg', caption: 'Waymaker Boat' },
     { id: 3, url: '🏠', caption: 'Our Location' },
     { id: 4, url: '👨‍🍳', caption: 'Andrew Cooking' }
   ]);
@@ -49,9 +49,9 @@ const Gallery = ({ t }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {photos.map(photo => (
             <div key={photo.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:scale-105 transform transition-all">
-              <div className="aspect-square flex items-center justify-center bg-blue-50 text-6xl">
-                {photo.url.startsWith('data:') ? (
-                  <img src={photo.url} alt={photo.caption} className="w-full h-full object-cover" />
+              <div className="aspect-square flex items-center justify-center bg-blue-50 text-6xl p-2">
+                {photo.url.startsWith('data:') || photo.url.startsWith('/images/') ? (
+                  <img src={photo.url} alt={photo.caption} className="w-full h-full object-contain" />
                 ) : (
                   photo.url
                 )}
