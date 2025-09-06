@@ -3,7 +3,9 @@ import React, { useState } from 'react';
 const Menu = ({ addToCart, t }) => {
   const [quantities, setQuantities] = useState({
     cooked: 1,
-    live: 1
+    live: 1,
+    scallops: 1,
+    barClams: 1
   });
 
   const products = [
@@ -20,6 +22,20 @@ const Menu = ({ addToCart, t }) => {
       price: 10,
       description: t.menu.liveDesc,
       image: '🦞'
+    },
+    {
+      id: 'scallops',
+      name: 'Scallops',
+      price: 25,
+      description: 'Fresh scallops per bag',
+      image: '🐚'
+    },
+    {
+      id: 'barClams',
+      name: 'Bar Clams',
+      price: 20,
+      description: 'Fresh bar clams per jar',
+      image: '🦪'
     }
   ];
 
@@ -38,7 +54,7 @@ const Menu = ({ addToCart, t }) => {
           {t.menu.title}
         </h2>
         
-        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
           {products.map(product => (
             <div key={product.id} className="bg-white rounded-2xl shadow-xl overflow-hidden hover:scale-105 transform transition-all">
               <div className="p-8 text-center">
@@ -47,7 +63,7 @@ const Menu = ({ addToCart, t }) => {
                   {product.name}
                 </h3>
                 <p className="text-3xl font-bold text-red-600 mb-4">
-                  ${product.price}/lb
+                  ${product.price}{product.id === 'scallops' ? '/bag' : product.id === 'barClams' ? '/jar' : '/lb'}
                 </p>
                 <p className="text-gray-600 mb-6">
                   {product.description}

@@ -2,10 +2,20 @@ import React from 'react';
 
 const Hero = ({ setCurrentSection, t }) => {
   return (
-    <section className="min-h-screen flex items-center justify-center wave-pattern">
-      <div className="container mx-auto px-4 text-center">
+    <section 
+      className="min-h-screen flex items-center justify-center relative"
+      style={{
+        backgroundImage: 'url(/images/lobsterandrew.jpg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
+      {/* Overlay pour améliorer la lisibilité du texte */}
+      <div className="absolute inset-0 bg-black/30"></div>
+      
+      <div className="container mx-auto px-4 text-center relative z-10">
         <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-12 max-w-4xl mx-auto shadow-2xl">
-          <div className="text-8xl mb-6">🦞</div>
           <h1 className="text-5xl md:text-7xl font-bold text-blue-900 mb-6">
             {t.hero.title}
           </h1>
