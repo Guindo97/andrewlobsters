@@ -1,0 +1,91 @@
+import React, { useState } from 'react';
+import { translations } from './data/translations';
+import Header from './components/Header';
+import Hero from './components/Hero';
+import About from './components/About';
+import Menu from './components/Menu';
+import Cart from './components/Cart';
+import Gallery from './components/Gallery';
+import Contact from './components/Contact';
+
+const App = () => {
+  const [currentSection, setCurrentSection] = useState('home');
+  const [language, setLanguage] = useState('en');
+  const [cartItems, setCartItems] = useState([]);
+
+  const t = translations[language];
+
+  const addToCart = (product) => {
+    setCartItems(prev => {
+      const existingItem = prev.find(item => item.id === product.id);
+      if (existingItem) {
+        return prev.map(item =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + product.quantity }
+            : item
+        );
+      }
+      return [...prev, product];
+    });
+  };
+
+  const updateCartItem = (id, quantity) => {
+    setCartItems(prev =>
+      prev.map(item =>
+        item.id === id ? { ...item, quantity } : item
+      )
+    );
+  };
+
+  const removeFromCart = (id) => {
+    setCartItems(prev => prev.filter(item => item.id !== id));
+  };
+
+  const renderSection = () => {
+    switch (currentSection) {
+      case 'home':
+        return (
+          <>
+            <Hero setCurrentSection={setCurrentSection} t={t} />
+            <About t={t} />
+          </>
+        );
+      case 'menu':
+        return <Menu addToCart={addToCart} t={t} />;
+      case 'gallery':
+        return <Gallery t={t} />;
+      case 'contact':
+        return <Contact t={t} />;
+      case 'cart':
+        return (
+          <Cart
+            cartItems={cartItems}
+            updateCartItem={updateCartItem}
+            removeFromCart={removeFromCart}
+            setCurrentSection={setCurrentSection}
+            t={t}
+          />
+        );
+      default:
+        return <Hero setCurrentSection={setCurrentSection} t={t} />;
+    }
+  };
+
+  return (
+    <div className="min-h-screen">
+      <Header
+        currentSection={currentSection}
+        setCurrentSection={setCurrentSection}
+        language={language}
+        setLanguage={setLanguage}
+        cartItems={cartItems}
+        t={t}
+      />
+      <main className="pt-20">
+        {renderSection()}
+      </main>
+    </div>
+  );
+};
+
+export default App;
