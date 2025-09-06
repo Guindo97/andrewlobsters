@@ -7,6 +7,7 @@ import Menu from './components/Menu';
 import Cart from './components/Cart';
 import Gallery from './components/Gallery';
 import Contact from './components/Contact';
+import Footer from './components/Footer';
 
 const App = () => {
   const [currentSection, setCurrentSection] = useState('home');
@@ -72,7 +73,7 @@ const App = () => {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flex flex-col">
       <Header
         currentSection={currentSection}
         setCurrentSection={setCurrentSection}
@@ -81,9 +82,10 @@ const App = () => {
         cartItems={cartItems}
         t={t}
       />
-      <main className="pt-20">
+      <main className="pt-20 flex-1">
         {renderSection()}
       </main>
+      <Footer t={t} setCurrentSection={setCurrentSection} />
     </div>
   );
 };
