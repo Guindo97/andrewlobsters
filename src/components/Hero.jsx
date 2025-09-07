@@ -1,6 +1,16 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Hero = ({ setCurrentSection, t }) => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, 1000); // 1.5 secondes de délai
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <section 
       className="min-h-screen flex items-center justify-center relative"
@@ -15,7 +25,9 @@ const Hero = ({ setCurrentSection, t }) => {
       <div className="absolute inset-0 bg-black/30"></div>
       
       <div className="container mx-auto px-4 text-center relative z-10">
-        <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-12 max-w-4xl mx-auto shadow-2xl">
+        <div className={`bg-white/90 backdrop-blur-sm rounded-3xl p-12 max-w-4xl mx-auto shadow-2xl transition-all duration-1000 ${
+          isVisible ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-8'
+        }`}>
           <h1 className="text-5xl md:text-7xl font-bold text-blue-900 mb-6">
             {t.hero.title}
           </h1>
