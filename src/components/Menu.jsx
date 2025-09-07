@@ -2,40 +2,64 @@ import React, { useState } from 'react';
 
 const Menu = ({ addToCart, t }) => {
   const [quantities, setQuantities] = useState({
-    cooked: 1,
-    live: 1,
-    scallops: 1,
-    barClams: 1
+    lobster: 0,
+    jumbo: 0,
+    jumboLive: 0,
+    liveLobster: 0,
+    scallops: 0,
+    barClams: 0,
+    salmon: 0
   });
 
   const products = [
     {
-      id: 'cooked',
-      name: t.menu.cookedLobster,
-      price: 12,
-      description: t.menu.cookedDesc,
+      id: 'lobster',
+      name: t.menu.lobster,
+      price: 15.50,
+      description: t.menu.lobsterDesc,
       image: '🦞'
     },
     {
-      id: 'live',
+      id: 'jumbo',
+      name: t.menu.jumbo,
+      price: 16.50,
+      description: t.menu.jumboDesc,
+      image: '🦞'
+    },
+    {
+      id: 'jumboLive',
+      name: t.menu.jumboLive,
+      price: 14.50,
+      description: t.menu.jumboLiveDesc,
+      image: '🦞'
+    },
+    {
+      id: 'liveLobster',
       name: t.menu.liveLobster,
-      price: 10,
-      description: t.menu.liveDesc,
+      price: 13.50,
+      description: t.menu.liveLobsterDesc,
       image: '🦞'
     },
     {
       id: 'scallops',
-      name: 'Scallops',
+      name: t.menu.scallops,
       price: 25,
-      description: 'Fresh scallops per bag',
+      description: t.menu.scallopsDesc,
       image: '🐚'
     },
     {
       id: 'barClams',
-      name: 'Bar Clams',
+      name: t.menu.barClams,
       price: 20,
-      description: 'Fresh bar clams per jar',
+      description: t.menu.barClamsDesc,
       image: '🦪'
+    },
+    {
+      id: 'salmon',
+      name: t.menu.salmon,
+      price: 110,
+      description: t.menu.salmonDesc,
+      image: '🐟'
     }
   ];
 
@@ -44,7 +68,7 @@ const Menu = ({ addToCart, t }) => {
       ...product,
       quantity: quantities[product.id]
     });
-    setQuantities(prev => ({ ...prev, [product.id]: 1 }));
+    setQuantities(prev => ({ ...prev, [product.id]: 0 }));
   };
 
   return (
@@ -54,7 +78,7 @@ const Menu = ({ addToCart, t }) => {
           {t.menu.title}
         </h2>
         
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 max-w-7xl mx-auto">
           {products.map(product => (
             <div key={product.id} className="bg-white rounded-2xl shadow-xl overflow-hidden hover:scale-105 transform transition-all">
               <div className="p-8 text-center">
@@ -63,7 +87,7 @@ const Menu = ({ addToCart, t }) => {
                   {product.name}
                 </h3>
                 <p className="text-3xl font-bold text-red-600 mb-4">
-                  ${product.price}{product.id === 'scallops' ? '/bag' : product.id === 'barClams' ? '/jar' : '/lb'}
+                  ${product.price}{product.id === 'barClams' ? '/jar' : product.id === 'salmon' ? '/10lb' : '/lb'}
                 </p>
                 <p className="text-gray-600 mb-6">
                   {product.description}
@@ -75,7 +99,7 @@ const Menu = ({ addToCart, t }) => {
                     <button
                       onClick={() => setQuantities(prev => ({
                         ...prev,
-                        [product.id]: Math.max(1, prev[product.id] - 1)
+                        [product.id]: Math.max(0, prev[product.id] - 1)
                       }))}
                       className="bg-gray-200 hover:bg-gray-300 w-8 h-8 rounded-full flex items-center justify-center"
                     >

@@ -38,7 +38,10 @@ const Hero = ({ setCurrentSection, t }) => {
             {t.hero.description}
           </p>
           <button
-            onClick={() => setCurrentSection('menu')}
+            onClick={() => {
+              setCurrentSection('menu');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
             className="lobster-red text-white px-8 py-4 rounded-full text-xl font-semibold hover:scale-105 transform transition-all shadow-lg"
           >
             {t.hero.cta} 🚤

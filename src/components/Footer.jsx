@@ -12,8 +12,7 @@ const Footer = ({ t, setCurrentSection }) => {
               <h3 className="text-lg md:text-2xl font-bold">Andrew's Lobsters</h3>
             </div>
             <p className="text-gray-300 mb-4">
-              Fresh, locally caught lobster — cooked daily and ready to enjoy. 
-              Straight from our boat to your home, it's more than a meal — it's family tradition.
+              {t.footer.description}
             </p>
             <div className="space-y-2 text-sm text-gray-300">
               <p><i className="fas fa-map-marker-alt mr-2 text-red-500"></i> 1206 Pabineau Falls Road, Bathurst, NB</p>
@@ -25,7 +24,7 @@ const Footer = ({ t, setCurrentSection }) => {
 
           {/* Quick Links - Style comme la capture d'écran */}
           <div>
-            <h4 className="text-lg font-semibold mb-6 text-white">Quick Links</h4>
+            <h4 className="text-lg font-semibold mb-6 text-white">{t.footer.quickLinks}</h4>
             <div className="grid grid-cols-2 gap-3">
               <button
                 onClick={() => {
@@ -73,6 +72,17 @@ const Footer = ({ t, setCurrentSection }) => {
               
               <button
                 onClick={() => {
+                  setCurrentSection('reviews');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className="bg-gray-800 hover:bg-gray-700 text-white p-4 rounded-lg transition-all duration-200 flex flex-col items-center space-y-2"
+              >
+                <i className="fas fa-star text-xl"></i>
+                <span className="text-sm font-medium">Reviews</span>
+              </button>
+              
+              <button
+                onClick={() => {
                   setCurrentSection('contact');
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
@@ -97,7 +107,7 @@ const Footer = ({ t, setCurrentSection }) => {
 
           {/* Get in Touch Section */}
           <div>
-            <h4 className="text-lg font-semibold mb-6 text-white">Get in Touch</h4>
+            <h4 className="text-lg font-semibold mb-6 text-white">{t.footer.getInTouch}</h4>
             <div className="bg-gray-800 rounded-lg p-6">
               <div className="space-y-4 mb-6">
                 <div className="flex items-center space-x-3">
@@ -131,7 +141,7 @@ const Footer = ({ t, setCurrentSection }) => {
         {/* Bottom Section */}
         <div className="border-t border-gray-700 mt-8 pt-8 text-center">
           <div className="text-gray-400 text-sm mb-2">
-            © 2025 Andrew's Lobsters. All rights reserved. Website designed by Salifou Guindo.
+            © 2025 Andrew's Lobsters. {t.footer.copyright}
           </div>
         </div>
       </div>

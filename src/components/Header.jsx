@@ -24,10 +24,13 @@ const Header = ({ currentSection, setCurrentSection, language, setLanguage, cart
           
           {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-6">
-            {['home', 'menu', 'gallery', 'contact'].map(section => (
+            {['home', 'menu', 'gallery', 'reviews', 'contact'].map(section => (
               <button
                 key={section}
-                onClick={() => setCurrentSection(section)}
+                onClick={() => {
+                  setCurrentSection(section);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
                 className={`px-4 py-2 rounded-lg transition-all ${
                   currentSection === section 
                     ? 'bg-blue-600 text-white' 
@@ -38,7 +41,10 @@ const Header = ({ currentSection, setCurrentSection, language, setLanguage, cart
               </button>
             ))}
             <button
-              onClick={() => setCurrentSection('cart')}
+              onClick={() => {
+                setCurrentSection('cart');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
               className={`px-4 py-2 rounded-lg transition-all relative ${
                 currentSection === 'cart' 
                   ? 'bg-red-600 text-white' 
@@ -58,7 +64,10 @@ const Header = ({ currentSection, setCurrentSection, language, setLanguage, cart
           <div className="flex items-center space-x-4">
             {/* Mobile Cart Button */}
             <button
-              onClick={() => setCurrentSection('cart')}
+              onClick={() => {
+                setCurrentSection('cart');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
               className="md:hidden relative p-2 text-red-600 hover:bg-red-100 rounded-lg transition-colors"
             >
               <i className="fas fa-shopping-cart text-xl"></i>
@@ -91,19 +100,22 @@ const Header = ({ currentSection, setCurrentSection, language, setLanguage, cart
         {isMobileMenuOpen && (
           <div className="md:hidden mt-4 bg-white rounded-lg shadow-lg border">
             <nav className="flex flex-col space-y-2 p-4">
-              {['home', 'menu', 'gallery', 'contact'].map(section => (
-                <button
-                  key={section}
-                  onClick={() => handleSectionClick(section)}
-                  className={`px-4 py-3 rounded-lg transition-all text-left ${
-                    currentSection === section 
-                      ? 'bg-blue-600 text-white' 
-                      : 'text-blue-900 hover:bg-blue-100'
-                  }`}
-                >
-                  {t.nav[section]}
-                </button>
-              ))}
+            {['home', 'menu', 'gallery', 'reviews', 'contact'].map(section => (
+              <button
+                key={section}
+                onClick={() => {
+                  handleSectionClick(section);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className={`px-4 py-3 rounded-lg transition-all text-left ${
+                  currentSection === section 
+                    ? 'bg-blue-600 text-white' 
+                    : 'text-blue-900 hover:bg-blue-100'
+                }`}
+              >
+                {t.nav[section]}
+              </button>
+            ))}
             </nav>
           </div>
         )}

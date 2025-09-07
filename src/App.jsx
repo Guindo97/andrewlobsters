@@ -6,6 +6,7 @@ import About from './components/About';
 import Menu from './components/Menu';
 import Cart from './components/Cart';
 import Gallery from './components/Gallery';
+import Reviews from './components/Reviews';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 
@@ -55,6 +56,8 @@ const App = () => {
         return <Menu addToCart={addToCart} t={t} />;
       case 'gallery':
         return <Gallery t={t} />;
+      case 'reviews':
+        return <Reviews t={t} />;
       case 'contact':
         return <Contact t={t} />;
       case 'cart':

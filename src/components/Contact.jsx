@@ -10,7 +10,25 @@ const Contact = ({ t }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert('Message sent! We\'ll get back to you soon.');
+    
+    // Créer le sujet et le corps de l'email
+    const subject = `Message from ${formData.name} - Andrew's Lobsters Contact Form`;
+    const body = `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`;
+    
+    // Encoder les paramètres pour l'URL mailto
+    const encodedSubject = encodeURIComponent(subject);
+    const encodedBody = encodeURIComponent(body);
+    
+    // Créer le lien mailto
+    const mailtoLink = `mailto:andrewslobster@gmail.com?subject=${encodedSubject}&body=${encodedBody}`;
+    
+    // Ouvrir le client de messagerie
+    window.open(mailtoLink, '_blank');
+    
+    // Afficher un message de confirmation
+    alert('Opening your email client... Please send the message to complete the contact.');
+    
+    // Vider le formulaire
     setFormData({ name: '', email: '', message: '' });
   };
 
@@ -59,7 +77,7 @@ const Contact = ({ t }) => {
           
           <div className="space-y-8">
             <div className="bg-white rounded-2xl p-8 shadow-xl">
-              <h3 className="text-2xl font-bold text-blue-900 mb-6">Visit Us</h3>
+              <h3 className="text-2xl font-bold text-blue-900 mb-6">{t.contact.visitUs}</h3>
               <div className="space-y-4">
                 <a 
                   href="https://maps.google.com/maps?q=1206+Pabineau+Falls+Road,+Bathurst,+NB" 
@@ -95,18 +113,18 @@ const Contact = ({ t }) => {
             </div>
             
             <div className="bg-white rounded-2xl p-8 shadow-xl">
-              <h3 className="text-2xl font-bold text-blue-900 mb-6">Location Map</h3>
+              <h3 className="text-2xl font-bold text-blue-900 mb-6">{t.contact.locationMap}</h3>
               <div className="mb-4">
-                <p className="text-gray-700 mb-2">Find us at:</p>
+                <p className="text-gray-700 mb-2">{t.contact.findUs}</p>
                 <p className="text-sm text-gray-500">1206 Pabineau Falls Road, Bathurst, NB</p>
               </div>
               <Map />
             </div>
             
             <div className="bg-white rounded-2xl p-8 shadow-xl">
-              <h3 className="text-2xl font-bold text-blue-900 mb-6">Follow Us</h3>
+              <h3 className="text-2xl font-bold text-blue-900 mb-6">{t.contact.followUs}</h3>
               <div className="flex space-x-4">
-                <a href="#" className="bg-blue-600 text-white p-3 rounded-full hover:bg-blue-700 transition-colors">
+                <a href="https://www.facebook.com/profile.php?id=61576326763260" target="_blank" rel="noopener noreferrer" className="bg-blue-600 text-white p-3 rounded-full hover:bg-blue-700 transition-colors">
                   <i className="fab fa-facebook-f"></i>
                 </a>
                 <a href="#" className="bg-pink-600 text-white p-3 rounded-full hover:bg-pink-700 transition-colors">

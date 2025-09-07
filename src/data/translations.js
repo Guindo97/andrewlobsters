@@ -5,6 +5,7 @@ export const translations = {
       home: "Home",
       menu: "Menu",
       gallery: "Gallery",
+      reviews: "Reviews",
       contact: "Contact",
       cart: "Cart"
     },
@@ -28,12 +29,20 @@ export const translations = {
     },
     menu: {
       title: "Our Fresh Catch",
-      cookedLobster: "Cooked Lobster",
-      cookedPrice: "$12/lb",
-      cookedDesc: "Fresh cooked lobster, ready to enjoy",
+      lobster: "Lobster",
+      lobsterDesc: "Fresh lobster per pound",
+      jumbo: "Jumbo",
+      jumboDesc: "Jumbo lobster per pound",
+      jumboLive: "Jumbo Live",
+      jumboLiveDesc: "Jumbo live lobster per pound",
       liveLobster: "Live Lobster",
-      livePrice: "$10/lb",
-      liveDesc: "Orders before 11 AM",
+      liveLobsterDesc: "Live lobster per pound",
+      scallops: "Scallops",
+      scallopsDesc: "Fresh scallops per pound",
+      barClams: "Bar Clams",
+      barClamsDesc: "Fresh bar clams per jar",
+      salmon: "Salmon",
+      salmonDesc: "10lb of fresh salmon",
       addToCart: "Add to Cart",
       quantity: "Quantity"
     },
@@ -60,14 +69,29 @@ export const translations = {
     gallery: {
       title: "Gallery",
       upload: "Upload New Photo",
-      addPhoto: "Add Photo"
+      addPhoto: "Add Photo",
+      adminMode: "Admin Mode",
+      adminAccess: "Admin Access",
+      adminPassword: "Admin Password",
+      enterPassword: "Enter password",
+      login: "Login",
+      cancel: "Cancel",
+      adminModeActive: "Admin mode activated",
+      logout: "Logout",
+      deletePhoto: "Delete this photo",
+      clickToRename: "Click to rename",
+      save: "Save"
     },
     contact: {
       title: "Contact Us",
       name: "Name",
       email: "Email",
       message: "Message",
-      send: "Send Message"
+      send: "Send Message",
+      visitUs: "Visit Us",
+      locationMap: "Location Map",
+      findUs: "Find us at:",
+      followUs: "Follow Us"
     },
     checkout: {
       title: "Checkout",
@@ -78,6 +102,30 @@ export const translations = {
       cvv: "CVV",
       placeOrder: "Place Order",
       orderSuccess: "Order placed successfully!"
+    },
+    reviews: {
+      title: "Customer Reviews",
+      subtitle: "See what our customers are saying about Andrew's Lobsters",
+      averageRating: "Average Rating",
+      happyCustomers: "Happy Customers",
+      yearsOfService: "Years of Service",
+      shareExperience: "Share Your Experience",
+      shareDescription: "Had a great experience with Andrew's Lobsters? We'd love to hear from you!",
+      leaveReview: "Leave a Review",
+      yourName: "Your Name",
+      rating: "Rating",
+      yourReview: "Your Review",
+      tellExperience: "Tell us about your experience...",
+      submitReview: "Submit Review",
+      thankYou: "Thank you for your review! It has been added successfully.",
+      enterName: "Enter your name"
+    },
+    footer: {
+      companyInfo: "Andrew's Lobsters",
+      description: "Fresh, locally caught lobster — cooked daily and ready to enjoy. Straight from our boat to your home, it's more than a meal — it's family tradition.",
+      quickLinks: "Quick Links",
+      getInTouch: "Get in Touch",
+      copyright: "All rights reserved. Website designed by Salifou Guindo."
     }
   },
   fr: {
@@ -85,6 +133,7 @@ export const translations = {
       home: "Accueil",
       menu: "Menu",
       gallery: "Galerie",
+      reviews: "Avis",
       contact: "Contact",
       cart: "Panier"
     },
@@ -108,12 +157,20 @@ export const translations = {
     },
     menu: {
       title: "Notre Pêche Fraîche",
-      cookedLobster: "Homard Cuit",
-      cookedPrice: "12$/lb",
-      cookedDesc: "Homard frais cuit, prêt à déguster",
+      lobster: "Homard",
+      lobsterDesc: "Homard frais par livre",
+      jumbo: "Jumbo",
+      jumboDesc: "Homard jumbo par livre",
+      jumboLive: "Jumbo Vivant",
+      jumboLiveDesc: "Homard jumbo vivant par livre",
       liveLobster: "Homard Vivant",
-      livePrice: "10$/lb",
-      liveDesc: "Commandes avant 11h",
+      liveLobsterDesc: "Homard vivant par livre",
+      scallops: "Pétoncles",
+      scallopsDesc: "Pétoncles frais par livre",
+      barClams: "Palourdes",
+      barClamsDesc: "Palourdes fraîches par pot",
+      salmon: "Saumon",
+      salmonDesc: "10lb de saumon frais",
       addToCart: "Ajouter au Panier",
       quantity: "Quantité"
     },
@@ -140,14 +197,29 @@ export const translations = {
     gallery: {
       title: "Galerie",
       upload: "Télécharger Nouvelle Photo",
-      addPhoto: "Ajouter Photo"
+      addPhoto: "Ajouter Photo",
+      adminMode: "Mode Administrateur",
+      adminAccess: "Accès Admin",
+      adminPassword: "Mot de passe administrateur",
+      enterPassword: "Entrez le mot de passe",
+      login: "Se connecter",
+      cancel: "Annuler",
+      adminModeActive: "Mode administrateur activé",
+      logout: "Se déconnecter",
+      deletePhoto: "Supprimer cette photo",
+      clickToRename: "Cliquer pour renommer",
+      save: "Sauvegarder"
     },
     contact: {
       title: "Nous Contacter",
       name: "Nom",
       email: "Courriel",
       message: "Message",
-      send: "Envoyer Message"
+      send: "Envoyer Message",
+      visitUs: "Visitez-Nous",
+      locationMap: "Carte de Localisation",
+      findUs: "Trouvez-nous au:",
+      followUs: "Suivez-Nous"
     },
     checkout: {
       title: "Commande",
@@ -158,6 +230,30 @@ export const translations = {
       cvv: "CVV",
       placeOrder: "Passer Commande",
       orderSuccess: "Commande passée avec succès!"
+    },
+    reviews: {
+      title: "Avis Clients",
+      subtitle: "Découvrez ce que nos clients disent d'Andrew's Lobsters",
+      averageRating: "Note Moyenne",
+      happyCustomers: "Clients Satisfaits",
+      yearsOfService: "Années de Service",
+      shareExperience: "Partagez Votre Expérience",
+      shareDescription: "Vous avez eu une excellente expérience avec Andrew's Lobsters ? Nous aimerions avoir de vos nouvelles !",
+      leaveReview: "Laisser un Avis",
+      yourName: "Votre Nom",
+      rating: "Note",
+      yourReview: "Votre Avis",
+      tellExperience: "Parlez-nous de votre expérience...",
+      submitReview: "Soumettre l'Avis",
+      thankYou: "Merci pour votre avis ! Il a été ajouté avec succès.",
+      enterName: "Entrez votre nom"
+    },
+    footer: {
+      companyInfo: "Andrew's Lobsters",
+      description: "Homard frais pêché localement — cuit quotidiennement et prêt à déguster. Directement de notre bateau à votre maison, c'est plus qu'un repas — c'est une tradition familiale.",
+      quickLinks: "Liens Rapides",
+      getInTouch: "Contactez-Nous",
+      copyright: "Tous droits réservés. Site web conçu par Salifou Guindo."
     }
   }
 };
