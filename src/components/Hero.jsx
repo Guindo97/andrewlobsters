@@ -6,7 +6,7 @@ const Hero = ({ setCurrentSection, t }) => {
       className="min-h-screen flex items-center justify-center relative"
       style={{
         backgroundImage: 'url(/images/lobsterandrew.jpg)',
-        backgroundSize: 'cover',
+        backgroundSize: 'contain',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat'
       }}
