@@ -28,7 +28,10 @@ const Footer = ({ t, setCurrentSection }) => {
             <h4 className="text-lg font-semibold mb-6 text-white">Quick Links</h4>
             <div className="grid grid-cols-2 gap-3">
               <button
-                onClick={() => setCurrentSection('home')}
+                onClick={() => {
+                  setCurrentSection('home');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
                 className="bg-gray-800 hover:bg-gray-700 text-white p-4 rounded-lg transition-all duration-200 flex flex-col items-center space-y-2"
               >
                 <i className="fas fa-home text-xl"></i>
@@ -36,7 +39,10 @@ const Footer = ({ t, setCurrentSection }) => {
               </button>
               
               <button
-                onClick={() => setCurrentSection('about')}
+                onClick={() => {
+                  setCurrentSection('about');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
                 className="bg-gray-800 hover:bg-gray-700 text-white p-4 rounded-lg transition-all duration-200 flex flex-col items-center space-y-2"
               >
                 <i className="fas fa-users text-xl"></i>
@@ -44,7 +50,10 @@ const Footer = ({ t, setCurrentSection }) => {
               </button>
               
               <button
-                onClick={() => setCurrentSection('menu')}
+                onClick={() => {
+                  setCurrentSection('menu');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
                 className="bg-gray-800 hover:bg-gray-700 text-white p-4 rounded-lg transition-all duration-200 flex flex-col items-center space-y-2"
               >
                 <i className="fas fa-utensils text-xl"></i>
@@ -52,7 +61,10 @@ const Footer = ({ t, setCurrentSection }) => {
               </button>
               
               <button
-                onClick={() => setCurrentSection('gallery')}
+                onClick={() => {
+                  setCurrentSection('gallery');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
                 className="bg-gray-800 hover:bg-gray-700 text-white p-4 rounded-lg transition-all duration-200 flex flex-col items-center space-y-2"
               >
                 <i className="fas fa-images text-xl"></i>
@@ -60,7 +72,10 @@ const Footer = ({ t, setCurrentSection }) => {
               </button>
               
               <button
-                onClick={() => setCurrentSection('contact')}
+                onClick={() => {
+                  setCurrentSection('contact');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
                 className="bg-gray-800 hover:bg-gray-700 text-white p-4 rounded-lg transition-all duration-200 flex flex-col items-center space-y-2"
               >
                 <i className="fas fa-envelope text-xl"></i>
@@ -68,7 +83,10 @@ const Footer = ({ t, setCurrentSection }) => {
               </button>
               
               <button
-                onClick={() => setCurrentSection('cart')}
+                onClick={() => {
+                  setCurrentSection('cart');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
                 className="bg-gray-800 hover:bg-gray-700 text-white p-4 rounded-lg transition-all duration-200 flex flex-col items-center space-y-2"
               >
                 <i className="fas fa-shopping-cart text-xl"></i>
@@ -96,8 +114,12 @@ const Footer = ({ t, setCurrentSection }) => {
                 </div>
               </div>
               <button
-                onClick={() => setCurrentSection('contact')}
-                className="w-full bg-gradient-to-r from-orange-500 to-green-500 text-white py-3 px-4 rounded-lg font-semibold hover:from-orange-600 hover:to-green-600 transition-all duration-200 flex items-center justify-center space-x-2"
+                onClick={() => {
+                  setCurrentSection('contact');
+                  // Faire défiler vers le haut de la page
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className="w-full lobster-red text-white py-3 px-4 rounded-full font-semibold hover:scale-105 transform transition-all shadow-lg flex items-center justify-center space-x-2"
               >
                 <i className="fas fa-paper-plane"></i>
                 <span>Send a message</span>
