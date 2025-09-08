@@ -217,8 +217,14 @@ const Cart = ({ cartItems, updateCartItem, removeFromCart, setCurrentSection, t 
         
         {cartItems.length === 0 ? (
           <div className="text-center py-12">
-            <div className="text-6xl mb-4">🦞</div>
-            <p className="text-xl text-gray-600 mb-6">{t.cart.empty}</p>
+            <div className="flex justify-center mb-4">
+              <img 
+                src="/images/pannier.jpg" 
+                alt="Empty Cart"
+                className="w-64 h-64 object-contain rounded-lg shadow-lg"
+              />
+            </div>
+            <p className="text-xl text-gray-600 mb-6">{t.cart.empty} 😢</p>
             <button
               onClick={() => setCurrentSection('menu')}
               className="lobster-red text-white px-6 py-3 rounded-full font-semibold hover:scale-105 transform transition-all"
