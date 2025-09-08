@@ -50,7 +50,6 @@ const App = () => {
         return (
           <>
             <Hero setCurrentSection={setCurrentSection} t={t} />
-            <AboutUs t={t} />
             <About t={t} />
           </>
         );
