@@ -54,7 +54,7 @@ const Cart = ({ cartItems, updateCartItem, removeFromCart, setCurrentSection, t 
             {t.checkout.title}
           </h2>
           
-          <form onSubmit={handlePlaceOrder} className="space-y-8">
+          <form id="checkout-form" onSubmit={handlePlaceOrder} className="space-y-8">
             <div className="bg-white rounded-xl p-6 shadow-lg">
               <h3 className="text-xl font-bold text-blue-900 mb-4">
                 {t.checkout.customerInfo}
@@ -343,7 +343,17 @@ const Cart = ({ cartItems, updateCartItem, removeFromCart, setCurrentSection, t 
             </div>
             
             <button
-              onClick={() => setShowCheckout(true)}
+              data-checkout-button
+              onClick={() => {
+                setShowCheckout(true);
+                // Scroll vers le formulaire de paiement après un court délai
+                setTimeout(() => {
+                  const checkoutForm = document.getElementById('checkout-form');
+                  if (checkoutForm) {
+                    checkoutForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }
+                }, 100);
+              }}
               className="w-full lobster-red text-white py-4 rounded-xl text-xl font-semibold hover:scale-105 transform transition-all"
             >
               {t.cart.checkout}

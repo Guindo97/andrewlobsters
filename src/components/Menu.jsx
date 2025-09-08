@@ -231,8 +231,15 @@ const Menu = ({ addToCart, t, setCurrentSection }) => {
             onClick={() => {
               setCurrentSection('cart');
               setTimeout(() => {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }, 100);
+                // Scroll vers le bouton checkout du panier
+                const checkoutButton = document.querySelector('[data-checkout-button]');
+                if (checkoutButton) {
+                  checkoutButton.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                } else {
+                  // Fallback vers le haut si le bouton n'est pas trouvé
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+              }, 200);
             }}
             className="bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white px-8 py-4 rounded-2xl font-bold text-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 relative overflow-hidden group"
           >
