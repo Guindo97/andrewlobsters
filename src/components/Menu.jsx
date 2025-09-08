@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Menu = ({ addToCart, t }) => {
+const Menu = ({ addToCart, t, setCurrentSection }) => {
   const [quantities, setQuantities] = useState({
     lobster: 0,
     jumbo: 0,
@@ -163,38 +163,29 @@ const Menu = ({ addToCart, t }) => {
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 transform translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
               </div>
 
-              <div className="p-8 text-center">
-                <h3 className="text-2xl font-bold text-gray-800 mb-3 group-hover:text-blue-600 transition-colors duration-300">
+              <div className="p-6 text-center">
+                <h3 className="text-xl font-bold text-gray-800 mb-3 group-hover:text-blue-600 transition-colors duration-300">
                   {product.name}
                 </h3>
                 
-                <div className="mb-4">
-                  <span className="text-4xl font-bold bg-gradient-to-r from-red-600 to-red-500 bg-clip-text text-transparent">
-                    ${product.price}
-                  </span>
-                  <span className="text-lg text-gray-500 ml-1">
-                    {product.id === 'barClams' ? '/jar' : product.id === 'salmon' ? '/10lb' : '/lb'}
-                  </span>
-                </div>
-                
-                <p className="text-gray-600 mb-6 text-sm leading-relaxed">
+                <p className="text-gray-600 mb-4 text-sm leading-relaxed">
                   {product.description}
                 </p>
                 
-                {/* Quantity Selector */}
-                <div className="flex items-center justify-center space-x-4 mb-6">
-                  <label className="text-gray-700 font-medium">{t.menu.quantity}:</label>
-                  <div className="flex items-center space-x-3 bg-gray-100 rounded-full p-1">
+                {/* Quantity Selector - Repositionné au-dessus du prix */}
+                <div className="flex items-center justify-center space-x-3 mb-4">
+                  <label className="text-gray-700 font-medium text-sm">{t.menu.quantity}:</label>
+                  <div className="flex items-center space-x-2 bg-gray-100 rounded-full p-1">
                     <button
                       onClick={() => setQuantities(prev => ({
                         ...prev,
                         [product.id]: Math.max(0, prev[product.id] - 1)
                       }))}
-                      className="w-8 h-8 rounded-full bg-white shadow-md hover:bg-red-50 hover:text-red-600 flex items-center justify-center transition-all duration-200 font-bold"
+                      className="w-7 h-7 rounded-full bg-white shadow-md hover:bg-red-50 hover:text-red-600 flex items-center justify-center transition-all duration-200 font-bold text-sm"
                     >
                       -
                     </button>
-                    <span className="w-12 text-center font-bold text-lg text-gray-800">
+                    <span className="w-10 text-center font-bold text-base text-gray-800">
                       {quantities[product.id]}
                     </span>
                     <button
@@ -202,11 +193,20 @@ const Menu = ({ addToCart, t }) => {
                         ...prev,
                         [product.id]: prev[product.id] + 1
                       }))}
-                      className="w-8 h-8 rounded-full bg-white shadow-md hover:bg-green-50 hover:text-green-600 flex items-center justify-center transition-all duration-200 font-bold"
+                      className="w-7 h-7 rounded-full bg-white shadow-md hover:bg-green-50 hover:text-green-600 flex items-center justify-center transition-all duration-200 font-bold text-sm"
                     >
                       +
                     </button>
                   </div>
+                </div>
+                
+                <div className="mb-4">
+                  <span className="text-3xl font-bold bg-gradient-to-r from-red-600 to-red-500 bg-clip-text text-transparent">
+                    ${product.price}
+                  </span>
+                  <span className="text-base text-gray-500 ml-1">
+                    {product.id === 'barClams' ? '/jar' : product.id === 'salmon' ? '/10lb' : '/lb'}
+                  </span>
                 </div>
                 
                 {/* Add to Cart Button */}
@@ -223,6 +223,25 @@ const Menu = ({ addToCart, t }) => {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Checkout Button */}
+        <div className="text-center mt-12">
+          <button
+            onClick={() => {
+              setCurrentSection('cart');
+              setTimeout(() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }, 100);
+            }}
+            className="bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white px-8 py-4 rounded-2xl font-bold text-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 relative overflow-hidden group"
+          >
+            <span className="relative z-10 flex items-center justify-center">
+              <i className="fas fa-shopping-cart mr-3"></i>
+              {t.cart.checkout}
+            </span>
+            <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+          </button>
         </div>
 
         {/* Delivery Info Card */}

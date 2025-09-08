@@ -221,7 +221,7 @@ const Cart = ({ cartItems, updateCartItem, removeFromCart, setCurrentSection, t 
               <img 
                 src="/images/pannier.jpg" 
                 alt="Empty Cart"
-                className="w-64 h-64 object-contain rounded-lg shadow-lg"
+                className="w-full max-w-md h-80 object-cover rounded-lg shadow-lg"
               />
             </div>
             <p className="text-xl text-gray-600 mb-6">{t.cart.empty} 😢</p>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { translations } from './data/translations';
 import Header from './components/Header';
 import Hero from './components/Hero';
@@ -17,6 +17,23 @@ const App = () => {
   const [cartItems, setCartItems] = useState([]);
 
   const t = translations[language];
+
+  // Charger le panier depuis localStorage au montage
+  useEffect(() => {
+    const savedCart = localStorage.getItem('andrewsLobstersCart');
+    if (savedCart) {
+      try {
+        setCartItems(JSON.parse(savedCart));
+      } catch (error) {
+        console.error('Error loading cart from localStorage:', error);
+      }
+    }
+  }, []);
+
+  // Sauvegarder le panier dans localStorage à chaque changement
+  useEffect(() => {
+    localStorage.setItem('andrewsLobstersCart', JSON.stringify(cartItems));
+  }, [cartItems]);
 
   const addToCart = (product) => {
     setCartItems(prev => {
@@ -56,7 +73,7 @@ const App = () => {
       case 'about':
         return <AboutUs t={t} />;
       case 'menu':
-        return <Menu addToCart={addToCart} t={t} />;
+        return <Menu addToCart={addToCart} t={t} setCurrentSection={setCurrentSection} />;
       case 'gallery':
         return <Gallery t={t} />;
       case 'reviews':
