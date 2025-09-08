@@ -72,7 +72,7 @@ const Menu = ({ addToCart, t }) => {
   };
 
   return (
-    <section className="py-20 relative overflow-hidden" style={{ backgroundImage: 'url(/images/background.jpg)', backgroundSize: 'contain', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
+    <section className="py-20 relative overflow-hidden" style={{ backgroundImage: 'url(/images/menu.jpeg)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
       {/* Background Elements */}
       <div className="absolute inset-0">
         <div className="absolute top-10 left-10 w-32 h-32 bg-blue-200 rounded-full opacity-20 animate-pulse"></div>
@@ -86,13 +86,17 @@ const Menu = ({ addToCart, t }) => {
           <div className="inline-block bg-white/20 backdrop-blur-sm text-white px-8 py-3 rounded-full text-sm font-semibold mb-6 border border-white/30">
             Ocean Variety in Our Store
           </div>
-          <h2 className="text-5xl md:text-6xl font-bold text-white mb-6 drop-shadow-2xl">
-            {t.menu.title}
-          </h2>
-          <p className="text-2xl text-white/90 mb-6 font-semibold drop-shadow-lg">
-            The Wonders of Ocean in Your Plate
-          </p>
-          <div className="w-32 h-1 bg-gradient-to-r from-white/60 to-white/30 mx-auto rounded-full"></div>
+          <div className="overflow-hidden">
+            <h2 className="text-5xl md:text-6xl font-bold text-white mb-6 drop-shadow-2xl transform -translate-y-full opacity-0 animate-whirlwind-in">
+              {t.menu.title}
+            </h2>
+          </div>
+          <div className="overflow-hidden">
+            <p className="text-2xl text-white/90 mb-6 font-semibold drop-shadow-lg transform -translate-y-full opacity-0 animate-whirlwind-in-delayed">
+              The Wonders of Ocean in Your Plate
+            </p>
+          </div>
+          <div className="w-32 h-1 bg-gradient-to-r from-white/60 to-white/30 mx-auto rounded-full transform scale-x-0 animate-scale-in"></div>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 max-w-7xl mx-auto">

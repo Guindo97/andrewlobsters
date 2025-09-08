@@ -66,8 +66,10 @@ const Hero = ({ setCurrentSection, t }) => {
             </button>
             <button
               onClick={() => {
-                setCurrentSection('about');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                const aboutSection = document.getElementById('about');
+                if (aboutSection) {
+                  aboutSection.scrollIntoView({ behavior: 'smooth' });
+                }
               }}
               className="bg-white/20 backdrop-blur-sm text-white border-2 border-white/50 px-12 py-5 rounded-full font-bold text-xl hover:bg-white/30 hover:border-white/70 transform transition-all shadow-2xl"
             >

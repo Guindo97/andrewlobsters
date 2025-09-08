@@ -3,6 +3,7 @@ import { translations } from './data/translations';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import About from './components/About';
+import AboutUs from './components/AboutUs';
 import Menu from './components/Menu';
 import Cart from './components/Cart';
 import Gallery from './components/Gallery';
@@ -49,9 +50,12 @@ const App = () => {
         return (
           <>
             <Hero setCurrentSection={setCurrentSection} t={t} />
+            <AboutUs t={t} />
             <About t={t} />
           </>
         );
+      case 'about':
+        return <AboutUs t={t} />;
       case 'menu':
         return <Menu addToCart={addToCart} t={t} />;
       case 'gallery':

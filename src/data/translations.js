@@ -3,6 +3,7 @@ export const translations = {
   en: {
     nav: {
       home: "Home",
+      about: "About Us",
       menu: "Menu",
       gallery: "Gallery",
       reviews: "Reviews",
@@ -20,6 +21,19 @@ export const translations = {
       description: "We're a local, family-run business bringing you the freshest lobster straight from the boat to your table.",
       dailyCook: "Every day, we cook up to 100 lbs. of fresh, local lobster, ready for you to pick up and enjoy.",
       experience: "Whether it's for a family dinner, weekend feast, or just because—you'll taste the difference in every bite!"
+    },
+    aboutUs: {
+      badge: "Our Story",
+      title: "About Andrew's Lobsters",
+      subtitle: "A Family Tradition of Excellence",
+      storyTitle: "Three Generations of Lobster Excellence",
+      story: "For over three decades, Andrew's Lobsters has been a cornerstone of the Bathurst community, bringing the finest Atlantic lobster directly from our fishing boats to your table. What started as a small family operation has grown into a beloved local institution, but we've never lost sight of our roots: delivering the freshest, highest-quality seafood with the personal touch that only a family business can provide.",
+      passionTitle: "Our Passion",
+      passion: "Every morning before dawn, our experienced fishermen set out into the pristine waters of the Bay of Chaleur, using sustainable fishing practices passed down through generations. We don't just catch lobster – we live and breathe the ocean, understanding its rhythms and respecting its bounty.",
+      traditionTitle: "Family Tradition",
+      tradition: "From grandfather to father to son, the art of lobster fishing and preparation has been carefully preserved in our family. Each lobster is handled with the same care and attention that our ancestors brought to their craft, ensuring that every customer receives not just a meal, but a piece of our family's heritage.",
+      commitmentTitle: "Our Commitment to You",
+      commitment: "We promise to deliver the freshest lobster, scallops, and seafood products, caught and prepared with the same dedication and love that has defined our family business for generations. When you choose Andrew's Lobsters, you're not just buying seafood – you're becoming part of our family's story."
     },
     info: {
       location: "Located at: 1206 Pabineau Falls Road",
@@ -131,6 +145,7 @@ export const translations = {
   fr: {
     nav: {
       home: "Accueil",
+      about: "À Propos",
       menu: "Menu",
       gallery: "Galerie",
       reviews: "Avis",
@@ -148,6 +163,19 @@ export const translations = {
       description: "Nous sommes une entreprise familiale locale qui vous apporte le homard le plus frais directement du bateau à votre table.",
       dailyCook: "Chaque jour, nous cuisinons jusqu'à 100 livres de homard frais local, prêt à être récupéré et dégusté.",
       experience: "Que ce soit pour un dîner en famille, un festin de week-end, ou juste parce que—vous goûterez la différence à chaque bouchée!"
+    },
+    aboutUs: {
+      badge: "Notre Histoire",
+      title: "À Propos d'Andrew's Lobsters",
+      subtitle: "Une Tradition Familiale d'Excellence",
+      storyTitle: "Trois Générations d'Excellence du Homard",
+      story: "Depuis plus de trois décennies, Andrew's Lobsters est un pilier de la communauté de Bathurst, apportant le meilleur homard de l'Atlantique directement de nos bateaux de pêche à votre table. Ce qui a commencé comme une petite entreprise familiale est devenu une institution locale bien-aimée, mais nous n'avons jamais perdu de vue nos racines : livrer les fruits de mer les plus frais et de la plus haute qualité avec la touche personnelle que seule une entreprise familiale peut offrir.",
+      passionTitle: "Notre Passion",
+      passion: "Chaque matin avant l'aube, nos pêcheurs expérimentés partent dans les eaux immaculées de la Baie des Chaleurs, utilisant des pratiques de pêche durables transmises de génération en génération. Nous ne pêchons pas seulement le homard – nous vivons et respirons l'océan, comprenant ses rythmes et respectant ses richesses.",
+      traditionTitle: "Tradition Familiale",
+      tradition: "De grand-père à père à fils, l'art de la pêche au homard et de sa préparation a été soigneusement préservé dans notre famille. Chaque homard est manipulé avec le même soin et la même attention que nos ancêtres apportaient à leur métier, garantissant que chaque client reçoit non seulement un repas, mais un morceau de l'héritage de notre famille.",
+      commitmentTitle: "Notre Engagement envers Vous",
+      commitment: "Nous nous engageons à livrer le homard, les pétoncles et les produits de la mer les plus frais, pêchés et préparés avec la même dévotion et le même amour qui ont défini notre entreprise familiale pendant des générations. Quand vous choisissez Andrew's Lobsters, vous n'achetez pas seulement des fruits de mer – vous devenez partie intégrante de l'histoire de notre famille."
     },
     info: {
       location: "Situé au: 1206 Pabineau Falls Road",

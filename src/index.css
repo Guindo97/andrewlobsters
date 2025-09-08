@@ -19,6 +19,62 @@ body {
   background: linear-gradient(45deg, #ff6b6b, #ee5a24);
 }
 
+/* Whirlwind animations for Menu titles */
+@keyframes whirlwind-in {
+  0% {
+    transform: translateY(-100%) rotateX(-90deg) scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(-20%) rotateX(-45deg) scale(0.9);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(0) rotateX(0deg) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes whirlwind-in-delayed {
+  0% {
+    transform: translateY(-100%) rotateX(-90deg) scale(0.8);
+    opacity: 0;
+  }
+  30% {
+    transform: translateY(-100%) rotateX(-90deg) scale(0.8);
+    opacity: 0;
+  }
+  80% {
+    transform: translateY(-20%) rotateX(-45deg) scale(0.9);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(0) rotateX(0deg) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes scale-in {
+  0% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+.animate-whirlwind-in {
+  animation: whirlwind-in 1.5s ease-out forwards;
+}
+
+.animate-whirlwind-in-delayed {
+  animation: whirlwind-in-delayed 2s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scale-in 1s ease-out 1.5s forwards;
+}
+
 .wave-pattern {
   background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M30 30c0-11.046-8.954-20-20-20s-20 8.954-20 20 8.954 20 20 20 20-8.954 20-20zm0 0c0 11.046 8.954 20 20 20s20-8.954 20-20-8.954-20-20-20-20 8.954-20 20z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
