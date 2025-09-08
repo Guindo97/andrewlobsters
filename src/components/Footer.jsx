@@ -40,7 +40,9 @@ const Footer = ({ t, setCurrentSection }) => {
               <button
                 onClick={() => {
                   setCurrentSection('about');
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                  setTimeout(() => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }, 100);
                 }}
                 className="bg-gray-800 hover:bg-gray-700 text-white p-4 rounded-lg transition-all duration-200 flex flex-col items-center space-y-2"
               >
@@ -51,7 +53,9 @@ const Footer = ({ t, setCurrentSection }) => {
               <button
                 onClick={() => {
                   setCurrentSection('menu');
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                  setTimeout(() => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }, 100);
                 }}
                 className="bg-gray-800 hover:bg-gray-700 text-white p-4 rounded-lg transition-all duration-200 flex flex-col items-center space-y-2"
               >
@@ -62,7 +66,9 @@ const Footer = ({ t, setCurrentSection }) => {
               <button
                 onClick={() => {
                   setCurrentSection('gallery');
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                  setTimeout(() => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }, 100);
                 }}
                 className="bg-gray-800 hover:bg-gray-700 text-white p-4 rounded-lg transition-all duration-200 flex flex-col items-center space-y-2"
               >
@@ -73,7 +79,9 @@ const Footer = ({ t, setCurrentSection }) => {
               <button
                 onClick={() => {
                   setCurrentSection('reviews');
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                  setTimeout(() => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }, 100);
                 }}
                 className="bg-gray-800 hover:bg-gray-700 text-white p-4 rounded-lg transition-all duration-200 flex flex-col items-center space-y-2"
               >
@@ -84,7 +92,9 @@ const Footer = ({ t, setCurrentSection }) => {
               <button
                 onClick={() => {
                   setCurrentSection('contact');
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                  setTimeout(() => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }, 100);
                 }}
                 className="bg-gray-800 hover:bg-gray-700 text-white p-4 rounded-lg transition-all duration-200 flex flex-col items-center space-y-2"
               >
@@ -95,7 +105,9 @@ const Footer = ({ t, setCurrentSection }) => {
               <button
                 onClick={() => {
                   setCurrentSection('cart');
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                  setTimeout(() => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }, 100);
                 }}
                 className="bg-gray-800 hover:bg-gray-700 text-white p-4 rounded-lg transition-all duration-200 flex flex-col items-center space-y-2"
               >
