@@ -275,29 +275,40 @@ const Cart = ({ cartItems, updateCartItem, removeFromCart, setCurrentSection, t 
             </div>
 
             {cartItems.map(item => (
-              <div key={item.id} className="bg-white rounded-xl p-6 shadow-lg flex items-center justify-between">
-                <div className="flex items-center space-x-4">
-                  <span className="text-3xl">{item.image}</span>
-                  <div>
-                    <h3 className="text-xl font-semibold text-blue-900">{item.name}</h3>
-                    <p className="text-gray-600">${item.price}/lb</p>
+              <div key={item.id} className="bg-white rounded-xl p-6 shadow-lg">
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex items-center space-x-4">
+                    <span className="text-3xl">{item.image}</span>
+                    <div>
+                      <h3 className="text-xl font-semibold text-blue-900">{item.name}</h3>
+                      <p className="text-gray-600">${item.price}/lb</p>
+                    </div>
                   </div>
+                  
+                  {/* Bouton de corbeille - Repositionné au-dessus du prix */}
+                  <button
+                    onClick={() => removeFromCart(item.id)}
+                    className="text-red-500 hover:text-red-700 p-2 hover:bg-red-50 rounded-full transition-colors"
+                    title="Supprimer cet article"
+                  >
+                    <i className="fas fa-trash text-lg"></i>
+                  </button>
                 </div>
                 
-                <div className="flex items-center space-x-4">
+                <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2">
-                                            <button
-                                              onClick={() => {
-                                                if (item.quantity <= 1) {
-                                                  removeFromCart(item.id);
-                                                } else {
-                                                  updateCartItem(item.id, item.quantity - 1);
-                                                }
-                                              }}
-                                              className="bg-gray-200 hover:bg-gray-300 w-8 h-8 rounded-full flex items-center justify-center"
-                                            >
-                                              -
-                                            </button>
+                    <button
+                      onClick={() => {
+                        if (item.quantity <= 1) {
+                          removeFromCart(item.id);
+                        } else {
+                          updateCartItem(item.id, item.quantity - 1);
+                        }
+                      }}
+                      className="bg-gray-200 hover:bg-gray-300 w-8 h-8 rounded-full flex items-center justify-center"
+                    >
+                      -
+                    </button>
                     <span className="w-12 text-center font-semibold">{item.quantity}</span>
                     <button
                       onClick={() => updateCartItem(item.id, item.quantity + 1)}
@@ -310,13 +321,6 @@ const Cart = ({ cartItems, updateCartItem, removeFromCart, setCurrentSection, t 
                   <div className="text-right">
                     <p className="text-lg font-semibold">${(item.price * item.quantity).toFixed(2)}</p>
                   </div>
-                  
-                  <button
-                    onClick={() => removeFromCart(item.id)}
-                    className="text-red-500 hover:text-red-700 p-2"
-                  >
-                    <i className="fas fa-trash"></i>
-                  </button>
                 </div>
               </div>
             ))}
