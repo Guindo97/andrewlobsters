@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 const Gallery = ({ t }) => {
   // Photos par défaut
   const defaultPhotos = [
-    { id: 1, url: '/images/homard.jpg', caption: 'Fresh Lobster' },
+    { id: 1, url: '/images/seafood.jpg', caption: 'Fresh Lobster' },
     { id: 2, url: '/images/waymaker.jpg', caption: 'Waymaker Boat' },
     { id: 3, url: '/images/location.jpg', caption: 'Our Location' },
     { id: 4, url: '👨‍🍳', caption: 'Andrew Cooking' }
@@ -131,7 +131,7 @@ const Gallery = ({ t }) => {
   };
 
   return (
-    <section className="py-20 relative overflow-hidden" style={{ backgroundImage: 'url(/images/seafood.jpg)', backgroundSize: 'contain', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
+    <section className="py-20 bg-gradient-to-br from-gray-50 via-white to-blue-50 relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0">
         <div className="absolute top-20 left-20 w-40 h-40 bg-blue-100 rounded-full opacity-30 animate-pulse"></div>

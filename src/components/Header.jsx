@@ -100,7 +100,7 @@ const Header = ({ currentSection, setCurrentSection, language, setLanguage, cart
         {isMobileMenuOpen && (
           <div className="md:hidden mt-4 bg-white rounded-lg shadow-lg border">
             <nav className="flex flex-col space-y-2 p-4">
-            {['home', 'about', 'menu', 'gallery', 'reviews', 'contact'].map(section => (
+            {['home', 'about', 'menu', 'gallery', 'reviews', 'contact', 'cart'].map(section => (
               <button
                 key={section}
                 onClick={() => {
