@@ -202,9 +202,18 @@ const Cart = ({ cartItems, updateCartItem, removeFromCart, setCurrentSection, t 
   return (
     <section className="py-20 bg-white/90 backdrop-blur-sm min-h-screen">
       <div className="container mx-auto px-4 max-w-4xl">
-        <h2 className="text-3xl font-bold text-center text-blue-900 mb-8">
-          {t.cart.title}
-        </h2>
+        <div className="text-center mb-12">
+          <div className="inline-block bg-gradient-to-r from-blue-600 to-blue-800 text-white px-6 py-2 rounded-full text-sm font-semibold mb-6 animate-pulse">
+            Your Order
+          </div>
+          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-900 via-blue-700 to-red-600 bg-clip-text text-transparent mb-6">
+            {t.cart.title}
+          </h2>
+          <p className="text-xl text-gray-800 mb-6 font-semibold">
+            The Wonders of Ocean in Your Plate
+          </p>
+          <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-red-600 mx-auto rounded-full"></div>
+        </div>
         
         {cartItems.length === 0 ? (
           <div className="text-center py-12">

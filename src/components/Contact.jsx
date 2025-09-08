@@ -35,9 +35,18 @@ const Contact = ({ t }) => {
   return (
     <section className="py-20 bg-white/90 backdrop-blur-sm">
       <div className="container mx-auto px-4 max-w-6xl">
-        <h2 className="text-4xl font-bold text-center text-blue-900 mb-12">
-          {t.contact.title}
-        </h2>
+        <div className="text-center mb-16">
+          <div className="inline-block bg-gradient-to-r from-blue-600 to-blue-800 text-white px-6 py-2 rounded-full text-sm font-semibold mb-6 animate-pulse">
+            Get in Touch
+          </div>
+          <h2 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-blue-900 via-blue-700 to-red-600 bg-clip-text text-transparent mb-6">
+            {t.contact.title}
+          </h2>
+          <p className="text-2xl text-gray-800 mb-6 font-semibold">
+            The Place to Be for Sea Food
+          </p>
+          <div className="w-32 h-1 bg-gradient-to-r from-blue-600 via-purple-500 to-red-600 mx-auto rounded-full"></div>
+        </div>
         
         <div className="grid lg:grid-cols-2 gap-12">
           <div>

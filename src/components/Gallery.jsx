@@ -131,12 +131,27 @@ const Gallery = ({ t }) => {
   };
 
   return (
-    <section className="py-20 bg-white/90 backdrop-blur-sm">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-blue-900 mb-6">
+    <section className="py-20 bg-gradient-to-br from-gray-50 via-white to-blue-50 relative overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute inset-0">
+        <div className="absolute top-20 left-20 w-40 h-40 bg-blue-100 rounded-full opacity-30 animate-pulse"></div>
+        <div className="absolute top-60 right-32 w-32 h-32 bg-red-100 rounded-full opacity-30 animate-pulse delay-1000"></div>
+        <div className="absolute bottom-32 left-1/3 w-24 h-24 bg-yellow-100 rounded-full opacity-30 animate-pulse delay-2000"></div>
+        <div className="absolute bottom-20 right-20 w-36 h-36 bg-green-100 rounded-full opacity-30 animate-pulse delay-500"></div>
+      </div>
+
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="text-center mb-16">
+          <div className="inline-block bg-gradient-to-r from-blue-600 to-blue-800 text-white px-6 py-2 rounded-full text-sm font-semibold mb-6 animate-pulse">
+            Fresh from the Ocean
+          </div>
+          <h2 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-blue-900 via-purple-700 to-red-600 bg-clip-text text-transparent mb-6">
             {t.gallery.title}
           </h2>
+          <p className="text-2xl text-gray-800 mb-6 font-semibold">
+            Discover Our Ocean Treasures
+          </p>
+          <div className="w-32 h-1 bg-gradient-to-r from-blue-600 via-purple-500 to-red-600 mx-auto rounded-full"></div>
           
           {/* Interface d'authentification */}
           {!isAdminMode ? (
@@ -212,46 +227,61 @@ const Gallery = ({ t }) => {
           )}
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {photos.map(photo => (
-            <div key={photo.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:scale-105 transform transition-all relative group">
-              <div className="aspect-square flex items-center justify-center bg-blue-50 text-6xl p-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          {photos.map((photo, index) => (
+            <div 
+              key={photo.id} 
+              className="group bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl overflow-hidden hover:scale-105 hover:shadow-3xl transform transition-all duration-500 border border-white/20 hover:border-blue-200/50 relative"
+              style={{ animationDelay: `${index * 100}ms` }}
+            >
+              <div className="aspect-square relative overflow-hidden bg-gradient-to-br from-blue-50 to-purple-50">
                 {photo.url.startsWith('data:') || photo.url.startsWith('/images/') ? (
-                  <img src={photo.url} alt={photo.caption} className="w-full h-full object-contain" />
+                  <img 
+                    src={photo.url} 
+                    alt={photo.caption} 
+                    className="w-full h-full object-contain p-4 group-hover:scale-110 transition-transform duration-500" 
+                  />
                 ) : (
-                  photo.url
+                  <div className="flex items-center justify-center h-full text-8xl group-hover:scale-110 transition-transform duration-500">
+                    {photo.url}
+                  </div>
                 )}
+                {/* Overlay Effect */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                {/* Shine Effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12 transform translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
               </div>
-              <div className="p-4">
+              
+              <div className="p-6">
                 {editingPhoto === photo.id ? (
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-3">
                     <input
                       type="text"
                       value={editCaption}
                       onChange={(e) => setEditCaption(e.target.value)}
                       onKeyPress={handleKeyPress}
-                      className="flex-1 text-center text-gray-700 font-medium border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="flex-1 text-center text-gray-700 font-medium border-2 border-blue-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       autoFocus
                     />
                     <button
                       onClick={saveEdit}
-                      className="text-green-600 hover:text-green-800 text-sm"
+                      className="w-8 h-8 bg-green-500 text-white rounded-full hover:bg-green-600 transition-colors flex items-center justify-center"
                       title={t.gallery.save}
                     >
-                      <i className="fas fa-check"></i>
+                      <i className="fas fa-check text-sm"></i>
                     </button>
                     <button
                       onClick={cancelEdit}
-                      className="text-red-600 hover:text-red-800 text-sm"
+                      className="w-8 h-8 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors flex items-center justify-center"
                       title={t.gallery.cancel}
                     >
-                      <i className="fas fa-times"></i>
+                      <i className="fas fa-times text-sm"></i>
                     </button>
                   </div>
                 ) : (
                   <p 
-                    className={`text-center text-gray-700 font-medium ${
-                      isAdminMode ? 'cursor-pointer hover:text-blue-600 transition-colors' : ''
+                    className={`text-center text-gray-700 font-semibold text-lg ${
+                      isAdminMode ? 'cursor-pointer hover:text-blue-600 transition-colors duration-300' : ''
                     }`}
                     onClick={isAdminMode ? () => startEditing(photo.id, photo.caption) : undefined}
                     title={isAdminMode ? t.gallery.clickToRename : ""}
@@ -260,14 +290,15 @@ const Gallery = ({ t }) => {
                   </p>
                 )}
               </div>
+              
               {/* Bouton de suppression - visible au survol seulement en mode admin */}
               {isAdminMode && (
                 <button
                   onClick={() => handleDeletePhoto(photo.id)}
-                  className="absolute top-2 right-2 bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-red-600 shadow-lg"
+                  className="absolute top-4 right-4 bg-red-500 text-white rounded-full w-10 h-10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-red-600 shadow-lg hover:scale-110"
                   title={t.gallery.deletePhoto}
                 >
-                  <i className="fas fa-times text-sm"></i>
+                  <i className="fas fa-trash text-sm"></i>
                 </button>
               )}
             </div>

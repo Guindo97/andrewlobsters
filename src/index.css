@@ -22,3 +22,101 @@ body {
 .wave-pattern {
   background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M30 30c0-11.046-8.954-20-20-20s-20 8.954-20 20 8.954 20 20 20 20-8.954 20-20zm0 0c0 11.046 8.954 20 20 20s20-8.954 20-20-8.954-20-20-20-20 8.954-20 20z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
+
+/* Seafood Theme Backgrounds */
+.seafood-bg-pattern {
+  background-image: 
+    radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(239, 68, 68, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 80%, rgba(34, 197, 94, 0.1) 0%, transparent 50%),
+    linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(239, 68, 68, 0.05) 100%);
+}
+
+.ocean-waves {
+  background-image: 
+    linear-gradient(45deg, rgba(59, 130, 246, 0.1) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(59, 130, 246, 0.1) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgba(34, 197, 94, 0.1) 75%),
+    linear-gradient(-45deg, transparent 75%, rgba(34, 197, 94, 0.1) 75%);
+  background-size: 60px 60px;
+  background-position: 0 0, 0 30px, 30px -30px, -30px 0px;
+  animation: wave-move 20s linear infinite;
+}
+
+@keyframes wave-move {
+  0% { background-position: 0 0, 0 30px, 30px -30px, -30px 0px; }
+  100% { background-position: 60px 60px, 60px 90px, 90px 30px, 30px 60px; }
+}
+
+.fish-scale-pattern {
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(34, 197, 94, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(239, 68, 68, 0.1) 0%, transparent 50%);
+  background-size: 100px 100px;
+  animation: scale-float 15s ease-in-out infinite;
+}
+
+@keyframes scale-float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(1deg); }
+}
+
+.lobster-net {
+  background-image: 
+    linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px),
+    linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: net-sway 25s linear infinite;
+}
+
+@keyframes net-sway {
+  0% { background-position: 0 0; }
+  100% { background-position: 50px 50px; }
+}
+
+.bubbles {
+  background-image: 
+    radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.2) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(34, 197, 94, 0.2) 0%, transparent 50%),
+    radial-gradient(circle at 40% 60%, rgba(239, 68, 68, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 60% 40%, rgba(168, 85, 247, 0.15) 0%, transparent 50%);
+  animation: bubble-rise 30s ease-in-out infinite;
+}
+
+@keyframes bubble-rise {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+.sea-foam {
+  background: linear-gradient(135deg, 
+    rgba(59, 130, 246, 0.05) 0%, 
+    rgba(34, 197, 94, 0.05) 25%, 
+    rgba(239, 68, 68, 0.05) 50%, 
+    rgba(168, 85, 247, 0.05) 75%, 
+    rgba(59, 130, 246, 0.05) 100%);
+  background-size: 400% 400%;
+  animation: foam-flow 20s ease infinite;
+}
+
+@keyframes foam-flow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.coral-reef {
+  background-image: 
+    radial-gradient(ellipse at 30% 20%, rgba(239, 68, 68, 0.1) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 80%, rgba(34, 197, 94, 0.1) 0%, transparent 60%),
+    radial-gradient(ellipse at 50% 50%, rgba(168, 85, 247, 0.08) 0%, transparent 60%);
+  background-size: 200px 200px;
+  animation: reef-sway 18s ease-in-out infinite;
+}
+
+@keyframes reef-sway {
+  0%, 100% { transform: translateX(0px) rotate(0deg); }
+  33% { transform: translateX(10px) rotate(0.5deg); }
+  66% { transform: translateX(-5px) rotate(-0.3deg); }
+}
