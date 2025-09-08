@@ -94,7 +94,9 @@ export const translations = {
       logout: "Logout",
       deletePhoto: "Delete this photo",
       clickToRename: "Click to rename",
-      save: "Save"
+      save: "Save",
+      seeOurLobsters: "See Our Lobsters",
+      discoverSelection: "Discover our fresh lobster selection"
     },
     contact: {
       title: "Contact Us",
@@ -236,7 +238,9 @@ export const translations = {
       logout: "Se déconnecter",
       deletePhoto: "Supprimer cette photo",
       clickToRename: "Cliquer pour renommer",
-      save: "Sauvegarder"
+      save: "Sauvegarder",
+      seeOurLobsters: "Voir nos Lobsters",
+      discoverSelection: "Découvrez notre sélection de homards frais"
     },
     contact: {
       title: "Nous Contacter",

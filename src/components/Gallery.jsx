@@ -1,13 +1,25 @@
 import React, { useState } from 'react';
 
 const Gallery = ({ t }) => {
-  // Photos par défaut
-  const defaultPhotos = [
-    { id: 1, url: '/images/seafood.jpg', caption: 'Fresh Lobster' },
-    { id: 2, url: '/images/waymaker.jpg', caption: 'Waymaker Boat' },
-    { id: 3, url: '/images/location.jpg', caption: 'Our Location' },
-    { id: 4, url: '👨‍🍳', caption: 'Andrew Cooking' }
+  // Photos par catégories
+  const lobsterPhotos = [
+    { id: 1, url: '/images/Lobsterimage.jpg', caption: '' },
+    { id: 2, url: '/images/imagelobstersize.jpg', caption: '' },
+    { id: 3, url: '/images/lobster1.jpg', caption: '' },
+    { id: 4, url: '/images/lobster2.jpg', caption: '' },
+    { id: 5, url: '/images/lobster3.jpg', caption: '' },
+    { id: 6, url: '/images/lobster4.jpg', caption: '' },
+    { id: 7, url: '/images/lobster5.jpg', caption: '' }
   ];
+
+  const otherPhotos = [
+    { id: 4, url: '/images/waymaker.jpg', caption: 'Waymaker Boat' },
+    { id: 5, url: '/images/location.jpg', caption: 'Our Location' },
+    { id: 6, url: '👨‍🍳', caption: 'Andrew Cooking' }
+  ];
+
+  // État pour gérer les catégories déroulées
+  const [expandedCategories, setExpandedCategories] = useState({});
 
   // Charger les photos depuis localStorage ou utiliser les photos par défaut
   const [photos, setPhotos] = useState(() => {
@@ -16,14 +28,14 @@ const Gallery = ({ t }) => {
       if (savedPhotos) {
         const parsed = JSON.parse(savedPhotos);
         // S'assurer que les photos par défaut sont toujours présentes
-        const defaultIds = defaultPhotos.map(p => p.id);
+        const defaultIds = [...lobsterPhotos, ...otherPhotos].map(p => p.id);
         const customPhotos = parsed.filter(p => !defaultIds.includes(p.id));
-        return [...defaultPhotos, ...customPhotos];
+        return [...lobsterPhotos, ...otherPhotos, ...customPhotos];
       }
-      return defaultPhotos;
+      return [...lobsterPhotos, ...otherPhotos];
     } catch (error) {
       console.error('Erreur lors du chargement des photos:', error);
-      return defaultPhotos;
+      return [...lobsterPhotos, ...otherPhotos];
     }
   });
 
@@ -110,6 +122,14 @@ const Gallery = ({ t }) => {
     } else if (e.key === 'Escape') {
       cancelEdit();
     }
+  };
+
+  // Fonction pour basculer l'expansion d'une catégorie
+  const toggleCategory = (category) => {
+    setExpandedCategories(prev => ({
+      ...prev,
+      [category]: !prev[category]
+    }));
   };
 
   // Fonctions pour l'authentification admin
@@ -228,7 +248,23 @@ const Gallery = ({ t }) => {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-          {photos.map((photo, index) => (
+          {/* Bouton Voir nos Lobsters */}
+          <button
+            onClick={() => toggleCategory('lobster')}
+            className="group rounded-3xl shadow-2xl overflow-hidden hover:scale-105 transform transition-all duration-500 border border-white/20 hover:border-red-200/50 relative min-h-[300px] flex flex-col items-center justify-center"
+            style={{ backgroundImage: 'url(/images/seafood.jpg)', backgroundSize: 'contain', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}
+          >
+            <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-all duration-300"></div>
+            <div className="text-center p-8 relative z-10 text-white">
+              <h3 className="text-2xl font-bold mb-2 drop-shadow-lg">{t.gallery.seeOurLobsters}</h3>
+              <p className="text-lg opacity-90 mb-4 drop-shadow-md">{t.gallery.discoverSelection}</p>
+              <i className={`fas fa-chevron-${expandedCategories.lobster ? 'up' : 'down'} text-2xl transition-transform duration-300 drop-shadow-lg`}></i>
+            </div>
+            <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+          </button>
+
+          {/* Images des Lobsters déroulées */}
+          {expandedCategories.lobster && lobsterPhotos.map((photo, index) => (
             <div 
               key={photo.id} 
               className="group bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl overflow-hidden hover:scale-105 hover:shadow-3xl transform transition-all duration-500 border border-white/20 hover:border-blue-200/50 relative"
@@ -252,44 +288,46 @@ const Gallery = ({ t }) => {
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12 transform translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
               </div>
               
-              <div className="p-6">
-                {editingPhoto === photo.id ? (
-                  <div className="flex items-center gap-3">
-                    <input
-                      type="text"
-                      value={editCaption}
-                      onChange={(e) => setEditCaption(e.target.value)}
-                      onKeyPress={handleKeyPress}
-                      className="flex-1 text-center text-gray-700 font-medium border-2 border-blue-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      autoFocus
-                    />
-                    <button
-                      onClick={saveEdit}
-                      className="w-8 h-8 bg-green-500 text-white rounded-full hover:bg-green-600 transition-colors flex items-center justify-center"
-                      title={t.gallery.save}
+              {photo.caption && (
+                <div className="p-6">
+                  {editingPhoto === photo.id ? (
+                    <div className="flex items-center gap-3">
+                      <input
+                        type="text"
+                        value={editCaption}
+                        onChange={(e) => setEditCaption(e.target.value)}
+                        onKeyPress={handleKeyPress}
+                        className="flex-1 text-center text-gray-700 font-medium border-2 border-blue-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        autoFocus
+                      />
+                      <button
+                        onClick={saveEdit}
+                        className="w-8 h-8 bg-green-500 text-white rounded-full hover:bg-green-600 transition-colors flex items-center justify-center"
+                        title={t.gallery.save}
+                      >
+                        <i className="fas fa-check text-sm"></i>
+                      </button>
+                      <button
+                        onClick={cancelEdit}
+                        className="w-8 h-8 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors flex items-center justify-center"
+                        title={t.gallery.cancel}
+                      >
+                        <i className="fas fa-times text-sm"></i>
+                      </button>
+                    </div>
+                  ) : (
+                    <p 
+                      className={`text-center text-gray-700 font-semibold text-lg ${
+                        isAdminMode ? 'cursor-pointer hover:text-blue-600 transition-colors duration-300' : ''
+                      }`}
+                      onClick={isAdminMode ? () => startEditing(photo.id, photo.caption) : undefined}
+                      title={isAdminMode ? t.gallery.clickToRename : ""}
                     >
-                      <i className="fas fa-check text-sm"></i>
-                    </button>
-                    <button
-                      onClick={cancelEdit}
-                      className="w-8 h-8 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors flex items-center justify-center"
-                      title={t.gallery.cancel}
-                    >
-                      <i className="fas fa-times text-sm"></i>
-                    </button>
-                  </div>
-                ) : (
-                  <p 
-                    className={`text-center text-gray-700 font-semibold text-lg ${
-                      isAdminMode ? 'cursor-pointer hover:text-blue-600 transition-colors duration-300' : ''
-                    }`}
-                    onClick={isAdminMode ? () => startEditing(photo.id, photo.caption) : undefined}
-                    title={isAdminMode ? t.gallery.clickToRename : ""}
-                  >
-                    {photo.caption}
-                  </p>
-                )}
-              </div>
+                      {photo.caption}
+                    </p>
+                  )}
+                </div>
+              )}
               
               {/* Bouton de suppression - visible au survol seulement en mode admin */}
               {isAdminMode && (
@@ -302,7 +340,151 @@ const Gallery = ({ t }) => {
                 </button>
               )}
             </div>
-          ))}
+              ))}
+
+          {/* Autres images normales - masquées quand les lobsters sont déroulés */}
+          {!expandedCategories.lobster && otherPhotos.map((photo, index) => (
+                <div 
+                  key={photo.id} 
+                  className="group bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl overflow-hidden hover:scale-105 hover:shadow-3xl transform transition-all duration-500 border border-white/20 hover:border-blue-200/50 relative"
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  <div className="relative h-64 bg-gradient-to-br from-blue-100 to-red-100 flex items-center justify-center overflow-hidden">
+                    {photo.url.startsWith('/images/') ? (
+                      <img 
+                        src={photo.url} 
+                        alt={photo.caption}
+                        className="w-full h-full object-contain p-2 group-hover:scale-110 transition-transform duration-500"
+                      />
+                    ) : (
+                      <div className="text-8xl group-hover:scale-110 transition-transform duration-500">
+                        {photo.url}
+                      </div>
+                    )}
+                    {/* Shine Effect */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 transform translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
+                  </div>
+                  
+                  <div className="p-6 text-center">
+                    {editingPhoto === photo.id ? (
+                      <div className="flex items-center space-x-2">
+                        <input
+                          type="text"
+                          value={editCaption}
+                          onChange={(e) => setEditCaption(e.target.value)}
+                          onKeyPress={handleKeyPress}
+                          className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          autoFocus
+                        />
+                        <button
+                          onClick={saveEdit}
+                          className="w-8 h-8 bg-green-500 text-white rounded-full hover:bg-green-600 transition-colors flex items-center justify-center"
+                          title={t.gallery.save}
+                        >
+                          <i className="fas fa-check text-sm"></i>
+                        </button>
+                        <button
+                          onClick={cancelEdit}
+                          className="w-8 h-8 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors flex items-center justify-center"
+                          title={t.gallery.cancel}
+                        >
+                          <i className="fas fa-times text-sm"></i>
+                        </button>
+                      </div>
+                    ) : (
+                      <p 
+                        className={`text-center text-gray-700 font-semibold text-lg ${
+                          isAdminMode ? 'cursor-pointer hover:text-blue-600 transition-colors duration-300' : ''
+                        }`}
+                        onClick={isAdminMode ? () => startEditing(photo.id, photo.caption) : undefined}
+                        title={isAdminMode ? t.gallery.clickToRename : ""}
+                      >
+                        {photo.caption}
+                      </p>
+                    )}
+                  </div>
+                  
+                  {/* Bouton de suppression - visible au survol seulement en mode admin */}
+                  {isAdminMode && (
+                    <button
+                      onClick={() => handleDeletePhoto(photo.id)}
+                      className="absolute top-4 right-4 bg-red-500 text-white rounded-full w-10 h-10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-red-600 shadow-lg hover:scale-110"
+                      title={t.gallery.deletePhoto}
+                    >
+                      <i className="fas fa-trash text-sm"></i>
+                    </button>
+                  )}
+                </div>
+              ))}
+
+          {/* Photos personnalisées ajoutées par l'utilisateur - masquées quand les lobsters sont déroulés */}
+          {!expandedCategories.lobster && photos.filter(photo => ![...lobsterPhotos, ...otherPhotos].some(p => p.id === photo.id)).map((photo, index) => (
+                <div 
+                  key={photo.id} 
+                  className="group bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl overflow-hidden hover:scale-105 hover:shadow-3xl transform transition-all duration-500 border border-white/20 hover:border-blue-200/50 relative"
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  <div className="relative h-64 bg-gradient-to-br from-blue-100 to-red-100 flex items-center justify-center overflow-hidden">
+                    <img 
+                      src={photo.url} 
+                      alt={photo.caption}
+                      className="w-full h-full object-contain p-2 group-hover:scale-110 transition-transform duration-500"
+                    />
+                    {/* Shine Effect */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 transform translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
+                  </div>
+                  
+                  <div className="p-6 text-center">
+                    {editingPhoto === photo.id ? (
+                      <div className="flex items-center space-x-2">
+                        <input
+                          type="text"
+                          value={editCaption}
+                          onChange={(e) => setEditCaption(e.target.value)}
+                          onKeyPress={handleKeyPress}
+                          className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          autoFocus
+                        />
+                        <button
+                          onClick={saveEdit}
+                          className="w-8 h-8 bg-green-500 text-white rounded-full hover:bg-green-600 transition-colors flex items-center justify-center"
+                          title={t.gallery.save}
+                        >
+                          <i className="fas fa-check text-sm"></i>
+                        </button>
+                        <button
+                          onClick={cancelEdit}
+                          className="w-8 h-8 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors flex items-center justify-center"
+                          title={t.gallery.cancel}
+                        >
+                          <i className="fas fa-times text-sm"></i>
+                        </button>
+                      </div>
+                    ) : (
+                      <p 
+                        className={`text-center text-gray-700 font-semibold text-lg ${
+                          isAdminMode ? 'cursor-pointer hover:text-blue-600 transition-colors duration-300' : ''
+                        }`}
+                        onClick={isAdminMode ? () => startEditing(photo.id, photo.caption) : undefined}
+                        title={isAdminMode ? t.gallery.clickToRename : ""}
+                      >
+                        {photo.caption}
+                      </p>
+                    )}
+                  </div>
+                  
+                  {/* Bouton de suppression - visible au survol seulement en mode admin */}
+                  {isAdminMode && (
+                    <button
+                      onClick={() => handleDeletePhoto(photo.id)}
+                      className="absolute top-4 right-4 bg-red-500 text-white rounded-full w-10 h-10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-red-600 shadow-lg hover:scale-110"
+                      title={t.gallery.deletePhoto}
+                    >
+                      <i className="fas fa-trash text-sm"></i>
+                    </button>
+                  )}
+                </div>
+              ))}
         </div>
       </div>
     </section>
