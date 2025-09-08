@@ -41,11 +41,15 @@ export const translations = {
       hours: "Open Monday–Saturday: Until we sell out!",
       email: "Email: andrewslobster@gmail.com"
     },
+    hours: {
+      mondaySaturday: "Monday–Saturday",
+      untilSoldOut: "Until we sell out!"
+    },
     menu: {
       title: "Our Fresh Catch",
-      lobster: "Lobster",
+      lobster: "Lobster cooked",
       lobsterDesc: "Fresh lobster per pound",
-      jumbo: "Jumbo",
+      jumbo: "Jumbo cooked",
       jumboDesc: "Jumbo lobster per pound",
       jumboLive: "Jumbo Live",
       jumboLiveDesc: "Jumbo live lobster per pound",
@@ -185,11 +189,15 @@ export const translations = {
       hours: "Ouvert lundi–samedi: Jusqu'à épuisement des stocks!",
       email: "Courriel: andrewslobster@gmail.com"
     },
+    hours: {
+      mondaySaturday: "Lundi–Samedi",
+      untilSoldOut: "Jusqu'à épuisement des stocks!"
+    },
     menu: {
       title: "Notre Pêche Fraîche",
-      lobster: "Homard",
+      lobster: "Homard cuit",
       lobsterDesc: "Homard frais par livre",
-      jumbo: "Jumbo",
+      jumbo: "Jumbo cuit",
       jumboDesc: "Homard jumbo par livre",
       jumboLive: "Jumbo Vivant",
       jumboLiveDesc: "Homard jumbo vivant par livre",

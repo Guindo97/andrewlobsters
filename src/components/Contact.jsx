@@ -116,7 +116,7 @@ const Contact = ({ t }) => {
                 
                 <div className="flex items-center space-x-3 p-2">
                   <i className="fas fa-clock text-yellow-600"></i>
-                  <span className="text-gray-700">Monday–Saturday: Until we sell out!</span>
+                  <span className="text-gray-700">{t.hours.mondaySaturday}: {t.hours.untilSoldOut}</span>
                 </div>
               </div>
             </div>

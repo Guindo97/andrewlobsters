@@ -20,6 +20,13 @@ const Menu = ({ addToCart, t }) => {
       image: '🦞'
     },
     {
+      id: 'liveLobster',
+      name: t.menu.liveLobster,
+      price: 13.50,
+      description: t.menu.liveLobsterDesc,
+      image: '🦞'
+    },
+    {
       id: 'jumbo',
       name: t.menu.jumbo,
       price: 16.50,
@@ -31,13 +38,6 @@ const Menu = ({ addToCart, t }) => {
       name: t.menu.jumboLive,
       price: 14.50,
       description: t.menu.jumboLiveDesc,
-      image: '🦞'
-    },
-    {
-      id: 'liveLobster',
-      name: t.menu.liveLobster,
-      price: 13.50,
-      description: t.menu.liveLobsterDesc,
       image: '🦞'
     },
     {
@@ -99,12 +99,15 @@ const Menu = ({ addToCart, t }) => {
           <div className="w-32 h-1 bg-gradient-to-r from-white/60 to-white/30 mx-auto rounded-full transform scale-x-0 animate-scale-in"></div>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 max-w-7xl mx-auto">
           {products.map((product, index) => (
             <div 
               key={product.id} 
-              className="group bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl overflow-hidden hover:scale-105 hover:shadow-3xl transform transition-all duration-500 border border-white/30 hover:border-white/50"
-              style={{ animationDelay: `${index * 100}ms` }}
+              className="group bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl overflow-hidden hover:scale-105 hover:shadow-3xl transform transition-all duration-500 border border-white/30 hover:border-white/50 opacity-0 translate-y-8 animate-fade-in-up"
+              style={{ 
+                animationDelay: `${index * 200}ms`,
+                animationFillMode: 'forwards'
+              }}
             >
               {/* Product Image Container */}
               <div className="relative h-48 bg-gradient-to-br from-blue-100 to-red-100 flex items-center justify-center overflow-hidden">
@@ -112,25 +115,44 @@ const Menu = ({ addToCart, t }) => {
                   <img 
                     src="/images/lobster.jpg" 
                     alt={product.name}
-                    className="w-72 h-72 object-contain group-hover:scale-110 transition-transform duration-500"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                ) : product.id === 'jumbo' ? (
+                  <img 
+                    src="/images/jumbocooked.webp" 
+                    alt={product.name}
+                    className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
+                  />
+                ) : product.id === 'jumboLive' ? (
+                  <img 
+                    src="/images/jumboL.jpeg" 
+                    alt={product.name}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    style={{ objectPosition: 'center 30%' }}
+                  />
+                ) : product.id === 'liveLobster' ? (
+                  <img 
+                    src="/images/livelobster.jpg" 
+                    alt={product.name}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                 ) : product.id === 'scallops' ? (
                   <img 
                     src="/images/scallops.jpg" 
                     alt={product.name}
-                    className="w-72 h-72 object-contain group-hover:scale-110 transition-transform duration-500"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                 ) : product.id === 'salmon' ? (
                   <img 
                     src="/images/salmon.jpg" 
                     alt={product.name}
-                    className="w-72 h-72 object-contain group-hover:scale-110 transition-transform duration-500"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                 ) : product.id === 'barClams' ? (
                   <img 
                     src="/images/clamsjar.jpg" 
                     alt={product.name}
-                    className="w-72 h-72 object-contain group-hover:scale-110 transition-transform duration-500"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                 ) : (
                   <div className="text-8xl group-hover:scale-110 transition-transform duration-500">

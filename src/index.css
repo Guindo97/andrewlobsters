@@ -176,3 +176,19 @@ body {
   33% { transform: translateX(10px) rotate(0.5deg); }
   66% { transform: translateX(-5px) rotate(-0.3deg); }
 }
+
+/* Fade in up animation for menu items */
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out forwards;
+}

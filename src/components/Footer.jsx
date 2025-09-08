@@ -18,20 +18,22 @@ const Footer = ({ t, setCurrentSection }) => {
               <p><i className="fas fa-map-marker-alt mr-2 text-red-500"></i> 1206 Pabineau Falls Road, Bathurst, NB</p>
               <p><i className="fas fa-phone mr-2 text-green-500"></i> (506) 655-5599</p>
               <p><i className="fas fa-envelope mr-2 text-blue-500"></i> andrewslobster@gmail.com</p>
-              <p><i className="fas fa-clock mr-2 text-yellow-500"></i> Monday–Saturday: Until we sell out!</p>
+              <p><i className="fas fa-clock mr-2 text-yellow-500"></i> {t.hours.mondaySaturday}: {t.hours.untilSoldOut}</p>
             </div>
           </div>
 
           {/* Quick Links - Style comme la capture d'écran */}
           <div>
             <h4 className="text-lg font-semibold mb-6 text-white">{t.footer.quickLinks}</h4>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-2 sm:gap-3">
               <button
                 onClick={() => {
                   setCurrentSection('home');
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                  setTimeout(() => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }, 100);
                 }}
-                className="bg-gray-800 hover:bg-gray-700 text-white p-4 rounded-lg transition-all duration-200 flex flex-col items-center space-y-2"
+                className="bg-gray-800 hover:bg-gray-700 text-white p-3 sm:p-4 rounded-lg transition-all duration-200 flex flex-col items-center space-y-1 sm:space-y-2"
               >
                 <i className="fas fa-home text-xl"></i>
                 <span className="text-sm font-medium">Home</span>
@@ -44,7 +46,7 @@ const Footer = ({ t, setCurrentSection }) => {
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }, 100);
                 }}
-                className="bg-gray-800 hover:bg-gray-700 text-white p-4 rounded-lg transition-all duration-200 flex flex-col items-center space-y-2"
+                className="bg-gray-800 hover:bg-gray-700 text-white p-3 sm:p-4 rounded-lg transition-all duration-200 flex flex-col items-center space-y-1 sm:space-y-2"
               >
                 <i className="fas fa-users text-xl"></i>
                 <span className="text-sm font-medium">About Us</span>
@@ -57,7 +59,7 @@ const Footer = ({ t, setCurrentSection }) => {
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }, 100);
                 }}
-                className="bg-gray-800 hover:bg-gray-700 text-white p-4 rounded-lg transition-all duration-200 flex flex-col items-center space-y-2"
+                className="bg-gray-800 hover:bg-gray-700 text-white p-3 sm:p-4 rounded-lg transition-all duration-200 flex flex-col items-center space-y-1 sm:space-y-2"
               >
                 <i className="fas fa-utensils text-xl"></i>
                 <span className="text-sm font-medium">Menu</span>
@@ -70,7 +72,7 @@ const Footer = ({ t, setCurrentSection }) => {
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }, 100);
                 }}
-                className="bg-gray-800 hover:bg-gray-700 text-white p-4 rounded-lg transition-all duration-200 flex flex-col items-center space-y-2"
+                className="bg-gray-800 hover:bg-gray-700 text-white p-3 sm:p-4 rounded-lg transition-all duration-200 flex flex-col items-center space-y-1 sm:space-y-2"
               >
                 <i className="fas fa-images text-xl"></i>
                 <span className="text-sm font-medium">Gallery</span>
@@ -83,7 +85,7 @@ const Footer = ({ t, setCurrentSection }) => {
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }, 100);
                 }}
-                className="bg-gray-800 hover:bg-gray-700 text-white p-4 rounded-lg transition-all duration-200 flex flex-col items-center space-y-2"
+                className="bg-gray-800 hover:bg-gray-700 text-white p-3 sm:p-4 rounded-lg transition-all duration-200 flex flex-col items-center space-y-1 sm:space-y-2"
               >
                 <i className="fas fa-star text-xl"></i>
                 <span className="text-sm font-medium">Reviews</span>
@@ -96,7 +98,7 @@ const Footer = ({ t, setCurrentSection }) => {
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }, 100);
                 }}
-                className="bg-gray-800 hover:bg-gray-700 text-white p-4 rounded-lg transition-all duration-200 flex flex-col items-center space-y-2"
+                className="bg-gray-800 hover:bg-gray-700 text-white p-3 sm:p-4 rounded-lg transition-all duration-200 flex flex-col items-center space-y-1 sm:space-y-2"
               >
                 <i className="fas fa-envelope text-xl"></i>
                 <span className="text-sm font-medium">Contact</span>
@@ -109,7 +111,7 @@ const Footer = ({ t, setCurrentSection }) => {
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }, 100);
                 }}
-                className="bg-gray-800 hover:bg-gray-700 text-white p-4 rounded-lg transition-all duration-200 flex flex-col items-center space-y-2"
+                className="bg-gray-800 hover:bg-gray-700 text-white p-3 sm:p-4 rounded-lg transition-all duration-200 flex flex-col items-center space-y-1 sm:space-y-2"
               >
                 <i className="fas fa-shopping-cart text-xl"></i>
                 <span className="text-sm font-medium">Cart</span>
@@ -138,8 +140,9 @@ const Footer = ({ t, setCurrentSection }) => {
               <button
                 onClick={() => {
                   setCurrentSection('contact');
-                  // Faire défiler vers le haut de la page
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                  setTimeout(() => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }, 100);
                 }}
                 className="w-full lobster-red text-white py-3 px-4 rounded-full font-semibold hover:scale-105 transform transition-all shadow-lg flex items-center justify-center space-x-2"
               >
