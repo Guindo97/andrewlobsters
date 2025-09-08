@@ -9,6 +9,7 @@ import Cart from './components/Cart';
 import Gallery from './components/Gallery';
 import Reviews from './components/Reviews';
 import Contact from './components/Contact';
+import OrdersManagement from './components/OrdersManagement';
 import Footer from './components/Footer';
 
 const App = () => {
@@ -62,6 +63,7 @@ const App = () => {
   };
 
   const renderSection = () => {
+    console.log('Current section:', currentSection);
     switch (currentSection) {
       case 'home':
         return (
@@ -84,12 +86,16 @@ const App = () => {
         return (
           <Cart
             cartItems={cartItems}
+            setCartItems={setCartItems}
             updateCartItem={updateCartItem}
             removeFromCart={removeFromCart}
             setCurrentSection={setCurrentSection}
             t={t}
           />
         );
+      case 'orders':
+        console.log('Rendering OrdersManagement component');
+        return <OrdersManagement t={t} />;
       default:
         return <Hero setCurrentSection={setCurrentSection} t={t} />;
     }

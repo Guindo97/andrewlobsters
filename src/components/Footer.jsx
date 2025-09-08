@@ -106,6 +106,19 @@ const Footer = ({ t, setCurrentSection }) => {
               
               <button
                 onClick={() => {
+                  setCurrentSection('orders');
+                  setTimeout(() => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }, 100);
+                }}
+                className="bg-gray-800 hover:bg-gray-700 text-white p-3 sm:p-4 rounded-lg transition-all duration-200 flex flex-col items-center space-y-1 sm:space-y-2"
+              >
+                <i className="fas fa-clipboard-list text-xl"></i>
+                <span className="text-sm font-medium">Orders</span>
+              </button>
+              
+              <button
+                onClick={() => {
                   setCurrentSection('cart');
                   setTimeout(() => {
                     window.scrollTo({ top: 0, behavior: 'smooth' });

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Cart = ({ cartItems, updateCartItem, removeFromCart, setCurrentSection, t }) => {
+const Cart = ({ cartItems, setCartItems, updateCartItem, removeFromCart, setCurrentSection, t }) => {
   const [showCheckout, setShowCheckout] = useState(false);
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [deliveryOption, setDeliveryOption] = useState('pickup'); // 'pickup' or 'delivery'
@@ -23,24 +23,60 @@ const Cart = ({ cartItems, updateCartItem, removeFromCart, setCurrentSection, t 
 
   const handlePlaceOrder = (e) => {
     e.preventDefault();
-    // In a real app, this would process the payment
+    
+    // Créer la commande
+    const order = {
+      id: `ORD-${Date.now()}`,
+      createdAt: new Date().toISOString(),
+      customerInfo: { ...customerInfo },
+      items: cartItems.map(item => ({
+        name: item.name,
+        price: item.price,
+        quantity: item.quantity,
+        image: item.image
+      })),
+      subtotal: total,
+      deliveryFee: deliveryFee,
+      total: grandTotal,
+      deliveryOption: deliveryOption,
+      status: 'pending'
+    };
+
+    // Sauvegarder la commande dans localStorage
+    const existingOrders = JSON.parse(localStorage.getItem('andrewsLobstersOrders') || '[]');
+    existingOrders.push(order);
+    localStorage.setItem('andrewsLobstersOrders', JSON.stringify(existingOrders));
+
+    // Vider le panier
+    setCartItems([]);
+    setCustomerInfo({ name: '', email: '', phone: '', address: '' });
+    setDeliveryOption('pickup');
+
+    console.log('Order placed successfully!');
     setOrderPlaced(true);
-    setTimeout(() => {
-      setOrderPlaced(false);
-      setShowCheckout(false);
-      // Clear cart would go here
-    }, 3000);
   };
 
   if (orderPlaced) {
     return (
-      <section className="py-20 bg-white/90 backdrop-blur-sm min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="text-6xl mb-4">✅</div>
-          <h2 className="text-3xl font-bold text-green-600 mb-4">
-            {t.checkout.orderSuccess}
+      <section className="py-20 bg-gradient-to-br from-green-50 to-blue-50 min-h-screen flex items-center justify-center">
+        <div className="text-center max-w-md mx-auto p-8 bg-white rounded-2xl shadow-2xl">
+          <div className="text-8xl mb-6 animate-bounce">✅</div>
+          <h2 className="text-4xl font-bold text-green-600 mb-4">
+            {t.orders.orderSuccess}
           </h2>
-          <p className="text-gray-600">Thank you for your order!</p>
+          <p className="text-xl text-gray-700 mb-6">
+            {t.orders.orderSuccessMessage}
+          </p>
+          <button
+            onClick={() => {
+              setOrderPlaced(false);
+              setShowCheckout(false);
+              setCurrentSection('menu');
+            }}
+            className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            Continue Shopping
+          </button>
         </div>
       </section>
     );
