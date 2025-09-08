@@ -93,41 +93,55 @@ const Reviews = ({ t }) => {
 
   // Animation du compteur de clients
   useEffect(() => {
+    const animateCount = () => {
+      if (hasAnimated) return;
+      
+      setHasAnimated(true);
+      
+      // Animation du compteur de 0 à 500
+      const duration = 2000; // 2 secondes
+      const startTime = Date.now();
+      const targetValue = 500;
+      
+      const animate = () => {
+        const elapsed = Date.now() - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        // Fonction d'easing pour un effet plus naturel
+        const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+        const currentValue = Math.floor(targetValue * easeOutQuart);
+        
+        setCustomerCount(currentValue);
+        
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        }
+      };
+      
+      requestAnimationFrame(animate);
+    };
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting && !hasAnimated) {
-            setHasAnimated(true);
-            
-            // Animation du compteur de 0 à 500
-            const duration = 2000; // 2 secondes
-            const startTime = Date.now();
-            const targetValue = 500;
-            
-            const animateCount = () => {
-              const elapsed = Date.now() - startTime;
-              const progress = Math.min(elapsed / duration, 1);
-              
-              // Fonction d'easing pour un effet plus naturel
-              const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-              const currentValue = Math.floor(targetValue * easeOutQuart);
-              
-              setCustomerCount(currentValue);
-              
-              if (progress < 1) {
-                requestAnimationFrame(animateCount);
-              }
-            };
-            
-            requestAnimationFrame(animateCount);
+            // Délai pour s'assurer que l'animation démarre bien
+            setTimeout(animateCount, 200);
           }
         });
       },
       {
-        threshold: 0.3,
-        rootMargin: '0px 0px -50px 0px'
+        threshold: 0.05, // Seuil très bas pour mobile
+        rootMargin: '0px 0px 0px 0px' // Pas de marge négative
       }
     );
+
+    // Fallback pour mobile - déclencher l'animation après un délai
+    const mobileFallback = setTimeout(() => {
+      if (!hasAnimated) {
+        animateCount();
+      }
+    }, 3000); // 3 secondes après le chargement
 
     if (sectionRef.current) {
       observer.observe(sectionRef.current);
@@ -137,6 +151,7 @@ const Reviews = ({ t }) => {
       if (sectionRef.current) {
         observer.unobserve(sectionRef.current);
       }
+      clearTimeout(mobileFallback);
     };
   }, [hasAnimated]);
 
@@ -153,23 +168,51 @@ const Reviews = ({ t }) => {
         </div>
 
         {/* Stats Section */}
-        <div className="grid md:grid-cols-3 gap-8 mb-16">
-          <div className="text-center bg-white rounded-xl p-8 shadow-lg">
-            <div className="text-4xl font-bold text-blue-900 mb-2">4.9</div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-16">
+          <div className="text-center bg-white rounded-xl p-6 md:p-8 shadow-lg">
+            <div className="text-3xl md:text-4xl font-bold text-blue-900 mb-2">4.9</div>
             <div className="flex justify-center mb-2">
               {renderStars(5)}
             </div>
-            <p className="text-gray-600">{t.reviews.averageRating}</p>
+            <p className="text-sm md:text-base text-gray-600">{t.reviews.averageRating}</p>
           </div>
-          <div className="text-center bg-white rounded-xl p-8 shadow-lg">
-            <div className="text-4xl font-bold text-blue-900 mb-2">
+          <div className="text-center bg-white rounded-xl p-6 md:p-8 shadow-lg">
+            <div className="text-3xl md:text-4xl font-bold text-blue-900 mb-2 transition-all duration-300">
               {customerCount}+
             </div>
-            <p className="text-gray-600">{t.reviews.happyCustomers}</p>
+            <p className="text-sm md:text-base text-gray-600">{t.reviews.happyCustomers}</p>
+            {/* Bouton de test pour mobile - à supprimer après test */}
+            {!hasAnimated && (
+              <button
+                onClick={() => {
+                  setHasAnimated(true);
+                  const duration = 2000;
+                  const startTime = Date.now();
+                  const targetValue = 500;
+                  
+                  const animate = () => {
+                    const elapsed = Date.now() - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+                    const currentValue = Math.floor(targetValue * easeOutQuart);
+                    setCustomerCount(currentValue);
+                    
+                    if (progress < 1) {
+                      requestAnimationFrame(animate);
+                    }
+                  };
+                  
+                  requestAnimationFrame(animate);
+                }}
+                className="mt-2 text-xs bg-blue-500 text-white px-2 py-1 rounded"
+              >
+                Test Animation
+              </button>
+            )}
           </div>
-          <div className="text-center bg-white rounded-xl p-8 shadow-lg">
-            <div className="text-4xl font-bold text-blue-900 mb-2">5+</div>
-            <p className="text-gray-600">{t.reviews.yearsOfService}</p>
+          <div className="text-center bg-white rounded-xl p-6 md:p-8 shadow-lg">
+            <div className="text-3xl md:text-4xl font-bold text-blue-900 mb-2">5+</div>
+            <p className="text-sm md:text-base text-gray-600">{t.reviews.yearsOfService}</p>
           </div>
         </div>
 
