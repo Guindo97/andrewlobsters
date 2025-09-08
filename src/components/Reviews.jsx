@@ -11,8 +11,8 @@ const Reviews = ({ t }) => {
   const [customerCount, setCustomerCount] = useState(0);
   const sectionRef = useRef(null);
   
-  // État pour gérer les avis (statiques + nouveaux)
-  const [reviews, setReviews] = useState([
+  // Avis par défaut (statiques)
+  const defaultReviews = [
     {
       id: 1,
       name: "Sarah Johnson",
@@ -55,7 +55,39 @@ const Reviews = ({ t }) => {
       comment: "Outstanding quality and service. Andrew really knows his lobster! The best in the area, hands down.",
       date: "1 month ago"
     }
-  ]);
+  ];
+
+  // Charger les avis depuis localStorage ou utiliser les avis par défaut
+  const [reviews, setReviews] = useState(() => {
+    try {
+      const savedReviews = localStorage.getItem('reviews-data');
+      if (savedReviews) {
+        const parsed = JSON.parse(savedReviews);
+        // S'assurer que les avis par défaut sont toujours présents
+        const defaultIds = defaultReviews.map(r => r.id);
+        const customReviews = parsed.filter(r => !defaultIds.includes(r.id));
+        
+        // Trier les avis personnalisés par ID (plus récent = ID plus élevé)
+        const sortedCustomReviews = customReviews.sort((a, b) => b.id - a.id);
+        
+        // Mettre les avis personnalisés en premier (les plus récents)
+        return [...sortedCustomReviews, ...defaultReviews];
+      }
+      return defaultReviews;
+    } catch (error) {
+      console.error('Erreur lors du chargement des avis:', error);
+      return defaultReviews;
+    }
+  });
+
+  // Fonction pour sauvegarder les avis dans localStorage
+  const saveReviewsToStorage = (reviewsToSave) => {
+    try {
+      localStorage.setItem('reviews-data', JSON.stringify(reviewsToSave));
+    } catch (error) {
+      console.error('Erreur lors de la sauvegarde des avis:', error);
+    }
+  };
 
   const renderStars = (rating) => {
     return Array.from({ length: 5 }, (_, index) => (
@@ -80,7 +112,12 @@ const Reviews = ({ t }) => {
         date: "Just now"
       };
       
-      setReviews(prev => [reviewToAdd, ...prev]); // Ajouter au début de la liste
+      setReviews(prev => {
+        const newReviews = [reviewToAdd, ...prev]; // Ajouter au début de la liste
+        saveReviewsToStorage(newReviews); // Sauvegarder dans localStorage
+        return newReviews;
+      });
+      
       setNewReview({ name: '', rating: 5, comment: '' });
       setShowReviewForm(false);
       alert(t.reviews.thankYou);
