@@ -1,4 +1,5 @@
 import { supabase } from '../lib/supabase'
+import { adminNotificationsService } from './adminNotificationsService'
 
 export const ordersService = {
   // Créer une nouvelle commande
@@ -26,7 +27,19 @@ export const ordersService = {
         .select()
 
       if (error) throw error
-      return data[0]
+      
+      const newOrder = data[0]
+      
+      // 🔔 NOTIFIER ANDREW IMMÉDIATEMENT
+      try {
+        console.log('🔔 Admin notification for new order:', newOrder.order_number)
+        await adminNotificationsService.notifyAdmin(newOrder)
+      } catch (notificationError) {
+        console.warn('⚠️ Admin notification error (non-blocking):', notificationError)
+        // Ne pas faire échouer la création de commande si la notification échoue
+      }
+      
+      return newOrder
     } catch (error) {
       console.error('Erreur lors de la création de la commande:', error)
       throw error

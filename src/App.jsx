@@ -11,6 +11,8 @@ import Reviews from './components/Reviews';
 import Contact from './components/Contact';
 import OrdersManagement from './components/OrdersManagement';
 import Footer from './components/Footer';
+import AdminNotificationStatus from './components/AdminNotificationStatus';
+import { adminNotificationsService } from './services/adminNotificationsService';
 
 const App = () => {
   const [currentSection, setCurrentSection] = useState('home');
@@ -29,6 +31,21 @@ const App = () => {
         console.error('Error loading cart from localStorage:', error);
       }
     }
+  }, []);
+
+  // Demander la permission pour les notifications admin au démarrage
+  useEffect(() => {
+    // Attendre 2 secondes pour que l'app se charge complètement
+    const timer = setTimeout(async () => {
+      try {
+        console.log('🔔 Requesting permission for admin notifications...');
+        await adminNotificationsService.requestNotificationPermission();
+      } catch (error) {
+        console.warn('Error requesting notification permission:', error);
+      }
+    }, 2000);
+
+    return () => clearTimeout(timer);
   }, []);
 
   // Sauvegarder le panier dans localStorage à chaque changement
@@ -115,6 +132,9 @@ const App = () => {
         {renderSection()}
       </main>
       <Footer t={t} setCurrentSection={setCurrentSection} />
+      
+      {/* Statut des notifications admin */}
+      <AdminNotificationStatus />
     </div>
   );
 };
