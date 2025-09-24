@@ -125,3 +125,4 @@ Une fois configuré, **chaque commande client déclenche automatiquement** :
 3. 💾 **Sauvegarde** dans la base de données Supabase
 
 **Le client ne voit rien de tout cela !** 🎯
+
