@@ -1,8 +1,19 @@
 import React, { useState, useEffect } from 'react';
+import { useOrders } from '../hooks/useOrders';
+import { testSupabaseConnection } from '../lib/supabase';
 
 const OrdersManagement = ({ t }) => {
   console.log('OrdersManagement component loaded');
-  const [orders, setOrders] = useState([]);
+  const { 
+    orders, 
+    loading, 
+    error, 
+    loadOrders, 
+    updateOrderStatus, 
+    deleteOrder, 
+    getStats 
+  } = useOrders();
+  
   const [filteredOrders, setFilteredOrders] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
@@ -26,64 +37,12 @@ const OrdersManagement = ({ t }) => {
     }
   };
 
-  // Charger les commandes depuis localStorage
+  // Test de connexion Supabase au chargement
   useEffect(() => {
-    const savedOrders = localStorage.getItem('andrewsLobstersOrders');
-    if (savedOrders) {
-      try {
-        const parsedOrders = JSON.parse(savedOrders);
-        setOrders(parsedOrders);
-        setFilteredOrders(parsedOrders);
-      } catch (error) {
-        console.error('Error loading orders:', error);
-      }
-    } else {
-      // Ajouter des commandes de test si aucune commande n'existe
-      const testOrders = [
-        {
-          id: 'ORD-TEST-001',
-          createdAt: new Date().toISOString(),
-          customerInfo: {
-            name: 'Jean Dupont',
-            email: 'jean.dupont@email.com',
-            phone: '506-555-0123',
-            address: '123 Rue Principale, Bathurst, NB'
-          },
-          items: [
-            { name: 'Lobster cooked', price: 15.50, quantity: 2, image: '🦞' },
-            { name: 'Scallops', price: 25.00, quantity: 1, image: '🐚' }
-          ],
-          subtotal: 56.00,
-          deliveryFee: 5.00,
-          total: 61.00,
-          deliveryOption: 'delivery',
-          status: 'delivered'
-        },
-        {
-          id: 'ORD-TEST-002',
-          createdAt: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(), // Hier
-          customerInfo: {
-            name: 'Marie Leblanc',
-            email: 'marie.leblanc@email.com',
-            phone: '506-555-0456',
-            address: '456 Avenue du Port, Bathurst, NB'
-          },
-          items: [
-            { name: 'Jumbo cooked', price: 16.50, quantity: 1, image: '🦞' },
-            { name: 'Bar Clams', price: 20.00, quantity: 2, image: '🐚' }
-          ],
-          subtotal: 56.50,
-          deliveryFee: 0.00,
-          total: 56.50,
-          deliveryOption: 'pickup',
-          status: 'ready'
-        }
-      ];
-      setOrders(testOrders);
-      setFilteredOrders(testOrders);
-      localStorage.setItem('andrewsLobstersOrders', JSON.stringify(testOrders));
-    }
+    testSupabaseConnection();
   }, []);
+
+  // Les commandes sont maintenant chargées automatiquement par le hook useOrders
 
   // Filtrer les commandes
   useEffect(() => {
@@ -106,21 +65,21 @@ const OrdersManagement = ({ t }) => {
     // Filtre par date
     if (dateFilter !== 'all') {
       const today = new Date();
-      const orderDate = new Date(order.createdAt);
+      const orderDate = new Date(order.created_at);
       
       switch (dateFilter) {
         case 'today':
           filtered = filtered.filter(order => 
-            new Date(order.createdAt).toDateString() === today.toDateString()
+            new Date(order.created_at).toDateString() === today.toDateString()
           );
           break;
         case 'week':
           const weekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
-          filtered = filtered.filter(order => new Date(order.createdAt) >= weekAgo);
+          filtered = filtered.filter(order => new Date(order.created_at) >= weekAgo);
           break;
         case 'month':
           const monthAgo = new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000);
-          filtered = filtered.filter(order => new Date(order.createdAt) >= monthAgo);
+          filtered = filtered.filter(order => new Date(order.created_at) >= monthAgo);
           break;
       }
     }
@@ -128,30 +87,30 @@ const OrdersManagement = ({ t }) => {
     setFilteredOrders(filtered);
   }, [orders, searchTerm, statusFilter, dateFilter]);
 
-  // Calculer les statistiques
-  const calculateStats = () => {
-    const totalOrders = orders.length;
-    const totalRevenue = orders.reduce((sum, order) => sum + order.total, 0);
-    const todayOrders = orders.filter(order => 
-      new Date(order.createdAt).toDateString() === new Date().toDateString()
-    );
-    const todayRevenue = todayOrders.reduce((sum, order) => sum + order.total, 0);
-    
-    const statusCounts = orders.reduce((acc, order) => {
-      acc[order.status] = (acc[order.status] || 0) + 1;
-      return acc;
-    }, {});
+  // État pour les statistiques
+  const [stats, setStats] = useState({
+    totalOrders: 0,
+    totalRevenue: 0,
+    todayOrders: 0,
+    todayRevenue: 0,
+    statusCounts: {}
+  });
 
-    return {
-      totalOrders,
-      totalRevenue,
-      todayOrders: todayOrders.length,
-      todayRevenue,
-      statusCounts
+  // Charger les statistiques
+  useEffect(() => {
+    const loadStats = async () => {
+      try {
+        const statsData = await getStats();
+        setStats(statsData);
+      } catch (error) {
+        console.error('Erreur lors du chargement des statistiques:', error);
+      }
     };
-  };
-
-  const stats = calculateStats();
+    
+    if (isAuthenticated) {
+      loadStats();
+    }
+  }, [isAuthenticated, getStats]);
 
   // Fonction pour envoyer une notification SMS
   const sendSMSNotification = (order, newStatus) => {
@@ -167,7 +126,7 @@ const OrdersManagement = ({ t }) => {
     const smsMessage = smsMessages[newStatus];
     if (smsMessage) {
       const message = smsMessage.replace('{orderId}', order.id);
-      const phoneNumber = order.customerInfo.phone.replace(/\D/g, ''); // Nettoyer le numéro
+      const phoneNumber = (order.customerInfo?.phone || '').replace(/\D/g, ''); // Nettoyer le numéro
       
       // Copier le message dans le presse-papiers
       navigator.clipboard.writeText(message).then(() => {
@@ -242,7 +201,7 @@ Email: andrewslobster@gmail.com
       statusMessage = statusMessages[newStatus] || 'Status updated';
       emailSubject = t.orders.notifications.subject;
       emailBody = `
-${t.orders.notifications.greeting} ${order.customerInfo.name},
+${t.orders.notifications.greeting} ${order.customerInfo?.name || 'Client'},
 
 ${t.orders.notifications.orderUpdate}
 
@@ -263,7 +222,7 @@ Email: andrewslobster@gmail.com
     }
 
     // Créer le lien mailto
-    const mailtoLink = `mailto:${order.customerInfo.email}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+    const mailtoLink = `mailto:${order.customerInfo?.email || 'client@example.com'}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
     
     // Ouvrir le client email par défaut
     window.open(mailtoLink);
@@ -275,7 +234,7 @@ Email: andrewslobster@gmail.com
   const sendStatusNotification = (order, newStatus) => {
     // Pour TOUS les statuts, envoyer SMS + Email
     const shouldSend = window.confirm(
-      `Voulez-vous envoyer une notification SMS ET Email à ${order.customerInfo.name}?\n\n📱 SMS: ${order.customerInfo.phone}\n📧 Email: ${order.customerInfo.email}\n\nStatut: ${newStatus.toUpperCase()}\n\nCela ouvrira votre application SMS et votre client email.`
+      `Voulez-vous envoyer une notification SMS ET Email à ${order.customerInfo?.name || 'Client'}?\n\n📱 SMS: ${order.customerInfo?.phone || 'N/A'}\n📧 Email: ${order.customerInfo?.email || 'N/A'}\n\nStatut: ${newStatus.toUpperCase()}\n\nCela ouvrira votre application SMS et votre client email.`
     );
     
     if (shouldSend) {
@@ -296,27 +255,27 @@ Email: andrewslobster@gmail.com
     }
   };
 
-  // Mettre à jour le statut d'une commande
-  const updateOrderStatus = (orderId, newStatus, sendNotification = true) => {
-    const order = orders.find(o => o.id === orderId);
-    const updatedOrders = orders.map(order => 
-      order.id === orderId ? { ...order, status: newStatus } : order
-    );
-    setOrders(updatedOrders);
-    localStorage.setItem('andrewsLobstersOrders', JSON.stringify(updatedOrders));
-    
-    // Envoyer la notification seulement si demandé (pas pour la création initiale)
-    if (order && sendNotification) {
-      sendStatusNotification(order, newStatus);
+  // Mettre à jour le statut d'une commande (maintenant géré par le hook)
+  const handleUpdateOrderStatus = async (orderId, newStatus) => {
+    try {
+      await updateOrderStatus(orderId, newStatus);
+      console.log('✅ Statut mis à jour avec succès');
+    } catch (error) {
+      console.error('❌ Erreur lors de la mise à jour du statut:', error);
+      alert('Erreur lors de la mise à jour du statut');
     }
   };
 
-  // Supprimer une commande
-  const deleteOrder = (orderId) => {
+  // Supprimer une commande (maintenant géré par le hook)
+  const handleDeleteOrder = async (orderId) => {
     if (window.confirm('Êtes-vous sûr de vouloir supprimer cette commande ?')) {
-      const updatedOrders = orders.filter(order => order.id !== orderId);
-      setOrders(updatedOrders);
-      localStorage.setItem('andrewsLobstersOrders', JSON.stringify(updatedOrders));
+      try {
+        await deleteOrder(orderId);
+        console.log('✅ Commande supprimée avec succès');
+      } catch (error) {
+        console.error('❌ Erreur lors de la suppression:', error);
+        alert('Erreur lors de la suppression de la commande');
+      }
     }
   };
 
@@ -326,24 +285,24 @@ Email: andrewslobster@gmail.com
 FACTURE - ANDREW'S LOBSTERS
 ================================
 
-Client: ${order.customerInfo.name}
-Email: ${order.customerInfo.email}
-Téléphone: ${order.customerInfo.phone}
-Adresse: ${order.customerInfo.address}
+Client: ${order.customerInfo?.name || 'N/A'}
+Email: ${order.customerInfo?.email || 'N/A'}
+Téléphone: ${order.customerInfo?.phone || 'N/A'}
+Adresse: ${order.customerInfo?.address || 'N/A'}
 
 Commande #${order.id}
-Date: ${new Date(order.createdAt).toLocaleDateString('fr-CA')}
+Date: ${new Date(order.created_at).toLocaleDateString('fr-CA')}
 Statut: ${order.status}
 
 DÉTAILS DE LA COMMANDE:
 ----------------------
 ${order.items.map(item => 
-  `${item.name} x${item.quantity} - $${item.price}/lb = $${(item.price * item.quantity).toFixed(2)}`
+  `${item.name} x${item.quantity} - $${item.price}/lb = $${((item.price || 0) * (item.quantity || 0)).toFixed(2)}`
 ).join('\n')}
 
-SOUS-TOTAL: $${order.subtotal.toFixed(2)}
-FRAIS DE LIVRAISON: $${order.deliveryFee.toFixed(2)}
-TOTAL: $${order.total.toFixed(2)}
+SOUS-TOTAL: $${(order.subtotal || 0).toFixed(2)}
+FRAIS DE LIVRAISON: $${(order.deliveryFee || 0).toFixed(2)}
+TOTAL: $${(order.total || 0).toFixed(2)}
 
 Mode de livraison: ${order.deliveryOption === 'pickup' ? 'Ramassage' : 'Livraison'}
 
@@ -467,7 +426,7 @@ Merci pour votre commande!
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600">{t.orders.totalRevenue}</p>
-                <p className="text-2xl font-bold text-gray-900">${stats.totalRevenue.toFixed(2)}</p>
+                <p className="text-2xl font-bold text-gray-900">${(stats.totalRevenue || 0).toFixed(2)}</p>
               </div>
             </div>
           </div>
@@ -491,7 +450,7 @@ Merci pour votre commande!
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600">{t.orders.todayRevenue}</p>
-                <p className="text-2xl font-bold text-gray-900">${stats.todayRevenue.toFixed(2)}</p>
+                <p className="text-2xl font-bold text-gray-900">${(stats.todayRevenue || 0).toFixed(2)}</p>
               </div>
             </div>
           </div>
@@ -595,20 +554,20 @@ Merci pour votre commande!
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm font-medium text-gray-900">
-                          {order.customerInfo.name}
+                          {order.customerInfo?.name || 'N/A'}
                         </div>
                         <div className="text-sm text-gray-500">
-                          {order.customerInfo.email}
+                          {order.customerInfo?.email || 'N/A'}
                         </div>
                         <div className="text-sm text-gray-500">
-                          {order.customerInfo.phone}
+                          {order.customerInfo?.phone || 'N/A'}
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {formatDate(order.createdAt)}
+                        {formatDate(order.created_at)}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        ${order.total.toFixed(2)}
+                        ${(order.total || 0).toFixed(2)}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(order.status)}`}>
@@ -632,7 +591,7 @@ Merci pour votre commande!
                             <i className="fas fa-file-pdf"></i>
                           </button>
                           <button
-                            onClick={() => deleteOrder(order.id)}
+                            onClick={() => handleDeleteOrder(order.id)}
                             className="text-red-600 hover:text-red-900"
                             title="Supprimer"
                           >
@@ -669,10 +628,10 @@ Merci pour votre commande!
                 <div className="mb-6">
                   <h4 className="text-lg font-semibold text-gray-900 mb-3">Informations Client</h4>
                   <div className="bg-gray-50 rounded-lg p-4">
-                    <p><strong>Nom:</strong> {selectedOrder.customerInfo.name}</p>
-                    <p><strong>Email:</strong> {selectedOrder.customerInfo.email}</p>
-                    <p><strong>Téléphone:</strong> {selectedOrder.customerInfo.phone}</p>
-                    <p><strong>Adresse:</strong> {selectedOrder.customerInfo.address}</p>
+                    <p><strong>Nom:</strong> {selectedOrder.customerInfo?.name || 'N/A'}</p>
+                    <p><strong>Email:</strong> {selectedOrder.customerInfo?.email || 'N/A'}</p>
+                    <p><strong>Téléphone:</strong> {selectedOrder.customerInfo?.phone || 'N/A'}</p>
+                    <p><strong>Adresse:</strong> {selectedOrder.customerInfo?.address || 'N/A'}</p>
                   </div>
                 </div>
 
@@ -686,7 +645,7 @@ Merci pour votre commande!
                           <span className="font-medium">{item.name}</span>
                           <span className="text-gray-500 ml-2">x{item.quantity}</span>
                         </div>
-                        <span className="font-medium">${(item.price * item.quantity).toFixed(2)}</span>
+                        <span className="font-medium">${((item.price || 0) * (item.quantity || 0)).toFixed(2)}</span>
                       </div>
                     ))}
                   </div>
@@ -697,15 +656,15 @@ Merci pour votre commande!
                   <div className="bg-blue-50 rounded-lg p-4">
                     <div className="flex justify-between mb-2">
                       <span>Sous-total:</span>
-                      <span>${selectedOrder.subtotal.toFixed(2)}</span>
+                      <span>${(selectedOrder.subtotal || 0).toFixed(2)}</span>
                     </div>
                     <div className="flex justify-between mb-2">
                       <span>Frais de livraison:</span>
-                      <span>${selectedOrder.deliveryFee.toFixed(2)}</span>
+                      <span>${(selectedOrder.deliveryFee || 0).toFixed(2)}</span>
                     </div>
                     <div className="flex justify-between text-lg font-bold border-t pt-2">
                       <span>Total:</span>
-                      <span>${selectedOrder.total.toFixed(2)}</span>
+                      <span>${(selectedOrder.total || 0).toFixed(2)}</span>
                     </div>
                   </div>
                 </div>
@@ -715,7 +674,7 @@ Merci pour votre commande!
                   <select
                     value={selectedOrder.status}
                     onChange={(e) => {
-                      updateOrderStatus(selectedOrder.id, e.target.value);
+                      handleUpdateOrderStatus(selectedOrder.id, e.target.value);
                       setSelectedOrder({...selectedOrder, status: e.target.value});
                     }}
                     className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
@@ -731,7 +690,7 @@ Merci pour votre commande!
                   <button
                     onClick={() => {
                       const shouldSend = window.confirm(
-                        `Voulez-vous envoyer une notification à ${selectedOrder.customerInfo.email}?\n\nCela ouvrira votre client email avec le message pré-rempli.`
+                        `Voulez-vous envoyer une notification à ${selectedOrder.customerInfo?.email || 'N/A'}?\n\nCela ouvrira votre client email avec le message pré-rempli.`
                       );
                       if (shouldSend) {
                         sendStatusNotification(selectedOrder, selectedOrder.status);

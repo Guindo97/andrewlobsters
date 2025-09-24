@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useOrders } from '../hooks/useOrders';
 
 const Cart = ({ cartItems, setCartItems, updateCartItem, removeFromCart, setCurrentSection, t }) => {
+  const { createOrder, loading: orderLoading } = useOrders();
   const [showCheckout, setShowCheckout] = useState(false);
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [deliveryOption, setDeliveryOption] = useState('pickup'); // 'pickup' or 'delivery'
@@ -21,39 +23,40 @@ const Cart = ({ cartItems, setCartItems, updateCartItem, removeFromCart, setCurr
   const deliveryFee = deliveryOption === 'delivery' ? 5 : 0;
   const grandTotal = total + deliveryFee;
 
-  const handlePlaceOrder = (e) => {
+  const handlePlaceOrder = async (e) => {
     e.preventDefault();
     
-    // Créer la commande
-    const order = {
-      id: `ORD-${Date.now()}`,
-      createdAt: new Date().toISOString(),
-      customerInfo: { ...customerInfo },
-      items: cartItems.map(item => ({
-        name: item.name,
-        price: item.price,
-        quantity: item.quantity,
-        image: item.image
-      })),
-      subtotal: total,
-      deliveryFee: deliveryFee,
-      total: grandTotal,
-      deliveryOption: deliveryOption,
-      status: 'pending'
-    };
+    try {
+      // Créer la commande via l'API Supabase
+      const orderData = {
+        customerInfo: { ...customerInfo },
+        items: cartItems.map(item => ({
+          name: item.name,
+          price: item.price,
+          quantity: item.quantity,
+          image: item.image
+        })),
+        subtotal: total,
+        deliveryFee: deliveryFee,
+        total: grandTotal,
+        deliveryOption: deliveryOption,
+        paymentInfo: { ...paymentInfo }
+      };
 
-    // Sauvegarder la commande dans localStorage
-    const existingOrders = JSON.parse(localStorage.getItem('andrewsLobstersOrders') || '[]');
-    existingOrders.push(order);
-    localStorage.setItem('andrewsLobstersOrders', JSON.stringify(existingOrders));
+      const newOrder = await createOrder(orderData);
 
-    // Vider le panier
-    setCartItems([]);
-    setCustomerInfo({ name: '', email: '', phone: '', address: '' });
-    setDeliveryOption('pickup');
+      // Vider le panier
+      setCartItems([]);
+      setCustomerInfo({ name: '', email: '', phone: '', address: '' });
+      setDeliveryOption('pickup');
+      setPaymentInfo({ cardNumber: '', expiryDate: '', cvv: '', nameOnCard: '' });
 
-    console.log('Order placed successfully!');
-    setOrderPlaced(true);
+      console.log('✅ Commande créée avec succès:', newOrder);
+      setOrderPlaced(true);
+    } catch (error) {
+      console.error('❌ Erreur lors de la création de la commande:', error);
+      alert('Erreur lors de la création de la commande. Veuillez réessayer.');
+    }
   };
 
   if (orderPlaced) {
@@ -224,9 +227,10 @@ const Cart = ({ cartItems, setCartItems, updateCartItem, removeFromCart, setCurr
               </button>
               <button
                 type="submit"
-                className="flex-1 lobster-red text-white py-3 rounded-lg hover:scale-105 transform transition-all"
+                disabled={orderLoading}
+                className="flex-1 lobster-red text-white py-3 rounded-lg hover:scale-105 transform transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {t.checkout.placeOrder}
+                {orderLoading ? 'Création en cours...' : t.checkout.placeOrder}
               </button>
             </div>
           </form>
