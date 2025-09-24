@@ -1,5 +1,5 @@
 -- =====================================================
--- SCHÉMA BASE DE DONNÉES ANDREW'S LOBSTERS (GRATUIT)
+-- SCHÉMA BASE DE DONNÉES ANDREW'S LOBSTERS 
 -- =====================================================
 
 -- Table des produits
@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS notifications (
 );
 
 -- =====================================================
--- DONNÉES INITIALES (VOS PRODUITS ACTUELS)
+-- DONNÉES INITIALES ( PRODUITS ACTUELS)
 -- =====================================================
 
 -- Insérer les produits Andrew's Lobsters
