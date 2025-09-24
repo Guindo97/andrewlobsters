@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useOrders } from '../hooks/useOrders';
 import { testSupabaseConnection } from '../lib/supabase';
+import { adminNotificationsService } from '../services/adminNotificationsService';
 
 const OrdersManagement = ({ t }) => {
   console.log('OrdersManagement component loaded');
@@ -32,6 +33,10 @@ const OrdersManagement = ({ t }) => {
       setIsAuthenticated(true);
       setShowPasswordForm(false);
       setPasswordError('');
+      
+      // MARQUER QU'ANDREW A ACCÉDÉ À L'ADMIN
+      adminNotificationsService.markAndrewAccess();
+      console.log('✅ Andrew logged in - notifications will now be shown');
     } else {
       setPasswordError(t.orders.wrongPassword);
     }
@@ -201,7 +206,7 @@ Email: andrewslobster@gmail.com
       statusMessage = statusMessages[newStatus] || 'Status updated';
       emailSubject = t.orders.notifications.subject;
       emailBody = `
-${t.orders.notifications.greeting} ${order.customerInfo?.name || 'Client'},
+${t.orders.notifications.greeting} ${order.customer_info?.name || 'Client'},
 
 ${t.orders.notifications.orderUpdate}
 
@@ -285,10 +290,10 @@ Email: andrewslobster@gmail.com
 FACTURE - ANDREW'S LOBSTERS
 ================================
 
-Client: ${order.customerInfo?.name || 'N/A'}
-Email: ${order.customerInfo?.email || 'N/A'}
-Téléphone: ${order.customerInfo?.phone || 'N/A'}
-Adresse: ${order.customerInfo?.address || 'N/A'}
+Client: ${order.customer_info?.name || 'N/A'}
+Email: ${order.customer_info?.email || 'N/A'}
+Téléphone: ${order.customer_info?.phone || 'N/A'}
+Adresse: ${order.customer_info?.address || 'N/A'}
 
 Commande #${order.id}
 Date: ${new Date(order.created_at).toLocaleDateString('fr-CA')}
@@ -554,13 +559,13 @@ Merci pour votre commande!
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm font-medium text-gray-900">
-                          {order.customerInfo?.name || 'N/A'}
+                          {order.customer_info?.name || 'N/A'}
                         </div>
                         <div className="text-sm text-gray-500">
-                          {order.customerInfo?.email || 'N/A'}
+                          {order.customer_info?.email || 'N/A'}
                         </div>
                         <div className="text-sm text-gray-500">
-                          {order.customerInfo?.phone || 'N/A'}
+                          {order.customer_info?.phone || 'N/A'}
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
@@ -628,10 +633,10 @@ Merci pour votre commande!
                 <div className="mb-6">
                   <h4 className="text-lg font-semibold text-gray-900 mb-3">Informations Client</h4>
                   <div className="bg-gray-50 rounded-lg p-4">
-                    <p><strong>Nom:</strong> {selectedOrder.customerInfo?.name || 'N/A'}</p>
-                    <p><strong>Email:</strong> {selectedOrder.customerInfo?.email || 'N/A'}</p>
-                    <p><strong>Téléphone:</strong> {selectedOrder.customerInfo?.phone || 'N/A'}</p>
-                    <p><strong>Adresse:</strong> {selectedOrder.customerInfo?.address || 'N/A'}</p>
+                    <p><strong>Nom:</strong> {selectedOrder.customer_info?.name || 'N/A'}</p>
+                    <p><strong>Email:</strong> {selectedOrder.customer_info?.email || 'N/A'}</p>
+                    <p><strong>Téléphone:</strong> {selectedOrder.customer_info?.phone || 'N/A'}</p>
+                    <p><strong>Adresse:</strong> {selectedOrder.customer_info?.address || 'N/A'}</p>
                   </div>
                 </div>
 
@@ -690,7 +695,7 @@ Merci pour votre commande!
                   <button
                     onClick={() => {
                       const shouldSend = window.confirm(
-                        `Voulez-vous envoyer une notification à ${selectedOrder.customerInfo?.email || 'N/A'}?\n\nCela ouvrira votre client email avec le message pré-rempli.`
+                        `Voulez-vous envoyer une notification à ${selectedOrder.customer_info?.email || 'N/A'}?\n\nCela ouvrira votre client email avec le message pré-rempli.`
                       );
                       if (shouldSend) {
                         sendStatusNotification(selectedOrder, selectedOrder.status);

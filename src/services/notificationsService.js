@@ -176,11 +176,11 @@ Andrew's Lobsters`,
         )
       }
       
-      // Enregistrer dans la base de données
-      await this.logNotification(order.id, 'email', 'sent', content.email)
-      if (order.customer_info.phone) {
-        await this.logNotification(order.id, 'sms', 'sent', content.sms)
-      }
+      // Enregistrer dans la base de données (désactivé temporairement)
+      // await this.logNotification(order.id, 'email', 'sent', content.email)
+      // if (order.customer_info.phone) {
+      //   await this.logNotification(order.id, 'sms', 'sent', content.sms)
+      // }
       
       return { success: true, notificationsSent: ['email', 'sms'] }
     } catch (error) {

@@ -1,4 +1,6 @@
 // Service pour les notifications admin (Andrew)
+import { sendEmailToAndrew } from './emailService'
+
 export const adminNotificationsService = {
   // Configuration admin
   adminEmail: 'andrewslobster@gmail.com',
@@ -93,19 +95,110 @@ The customer has been automatically notified of their order receipt.
 Thank you for using Andrew's Lobsters Management System!
       `.trim()
 
-      // Créer le lien mailto
-      const encodedSubject = encodeURIComponent(subject)
-      const encodedBody = encodeURIComponent(emailBody)
-      const mailtoLink = `mailto:${this.adminEmail}?subject=${encodedSubject}&body=${encodedBody}`
+      // ENVOYER L'EMAIL AUTOMATIQUEMENT (sans interface visible)
+      await sendEmailToAndrew(order)
       
-      // Ouvrir le client email par défaut
-      window.open(mailtoLink, '_blank')
-      
-      console.log('✅ Email notification sent to Andrew')
+      console.log('✅ Email notification sent automatically to Andrew')
       return { success: true, method: 'email' }
     } catch (error) {
       console.error('Erreur lors de l\'envoi de l\'email à Andrew:', error)
       throw error
+    }
+  },
+
+  // Envoyer l'email automatiquement (sans interface visible)
+  async sendEmailAutomatically(subject, body, order) {
+    try {
+      console.log('📧 Sending automatic email to Andrew...')
+      console.log('To:', this.adminEmail)
+      console.log('Subject:', subject)
+      console.log('Order:', order.order_number)
+      
+      // SIMULATION D'ENVOI AUTOMATIQUE
+      // Dans un vrai projet, vous intégreriez un service comme :
+      // - EmailJS (gratuit, facile à configurer)
+      // - SendGrid
+      // - AWS SES
+      // - Nodemailer avec un serveur backend
+      
+      // Pour l'instant, on simule un envoi réussi
+      // L'email sera "envoyé" automatiquement en arrière-plan
+      
+      // Vous pouvez remplacer ceci par un vrai service d'email :
+      /*
+      const templateParams = {
+        to_email: this.adminEmail,
+        subject: subject,
+        message: body,
+        order_number: order.order_number,
+        customer_name: order.customer_info?.name || 'Customer'
+      };
+      
+      // Exemple avec EmailJS (gratuit) :
+      await emailjs.send(
+        'YOUR_SERVICE_ID',
+        'YOUR_TEMPLATE_ID', 
+        templateParams
+      );
+      */
+      
+      // Simulation d'un délai d'envoi
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      
+      console.log('✅ Email sent automatically to Andrew (simulated)')
+      return { success: true, message: 'Email sent automatically' }
+    } catch (error) {
+      console.error('Error sending email automatically:', error)
+      throw error
+    }
+  },
+
+  // Vérifier si c'est Andrew qui utilise l'application
+  isAndrewUsingApp() {
+    try {
+      // Méthodes pour détecter si c'est Andrew :
+      
+      // 1. Vérifier si l'utilisateur est dans la page Orders (admin)
+      const currentPath = window.location.pathname
+      const isOnOrdersPage = currentPath.includes('orders') || 
+                            document.querySelector('[data-admin="true"]') !== null
+      
+      // 2. Vérifier si l'utilisateur a accédé à la page admin récemment
+      const hasAdminAccess = localStorage.getItem('andrew_admin_access') === 'true'
+      
+      // 3. Vérifier si l'utilisateur a un identifiant admin
+      const isAdminUser = localStorage.getItem('andrew_user_type') === 'admin'
+      
+      // 4. Vérifier si l'utilisateur est sur un appareil connu d'Andrew
+      const isAndrewDevice = localStorage.getItem('andrew_device_id') === 'andrew_laptop'
+      
+      // Combiner les vérifications
+      const isAndrew = isOnOrdersPage || hasAdminAccess || isAdminUser || isAndrewDevice
+      
+      console.log('🔍 Andrew detection:', {
+        isOnOrdersPage,
+        hasAdminAccess,
+        isAdminUser,
+        isAndrewDevice,
+        finalResult: isAndrew
+      })
+      
+      return isAndrew
+    } catch (error) {
+      console.warn('Error detecting Andrew:', error)
+      return false // Par défaut, ne pas montrer le popup
+    }
+  },
+
+  // Marquer qu'Andrew a accédé à l'admin (à appeler quand il se connecte)
+  markAndrewAccess() {
+    try {
+      localStorage.setItem('andrew_admin_access', 'true')
+      localStorage.setItem('andrew_user_type', 'admin')
+      localStorage.setItem('andrew_device_id', 'andrew_laptop')
+      console.log('✅ Andrew access marked in localStorage')
+    } catch (error) {
+      console.warn('Error marking Andrew access:', error)
     }
   },
 
@@ -133,21 +226,31 @@ Thank you for using Andrew's Lobsters Management System!
       
       const results = []
       
-      // 1. Demander la permission pour les notifications (si pas déjà accordée)
-      if (Notification.permission === 'default') {
-        await this.requestNotificationPermission()
+      // VÉRIFIER SI C'EST ANDREW QUI UTILISE L'APPLICATION
+      const isAndrew = this.isAndrewUsingApp()
+      
+      if (isAndrew) {
+        console.log('👤 Andrew is using the app - showing popup notification')
+        
+        // 1. Demander la permission pour les notifications (si pas déjà accordée)
+        if (Notification.permission === 'default') {
+          await this.requestNotificationPermission()
+        }
+        
+        // 2. Envoyer notification popup (uniquement pour Andrew)
+        try {
+          const popupResult = await this.sendPopupNotification(order)
+          results.push(popupResult)
+        } catch (error) {
+          console.warn('Erreur notification popup (non bloquante):', error)
+          results.push({ success: false, method: 'popup', error: error.message })
+        }
+      } else {
+        console.log('👤 Client is using the app - popup notification hidden')
+        results.push({ success: true, method: 'popup', message: 'Hidden for client' })
       }
       
-      // 2. Envoyer notification popup
-      try {
-        const popupResult = await this.sendPopupNotification(order)
-        results.push(popupResult)
-      } catch (error) {
-        console.warn('Erreur notification popup (non bloquante):', error)
-        results.push({ success: false, method: 'popup', error: error.message })
-      }
-      
-      // 3. Envoyer email
+      // 3. Envoyer email (toujours automatique)
       try {
         const emailResult = await this.sendEmailNotification(order)
         results.push(emailResult)
@@ -156,7 +259,7 @@ Thank you for using Andrew's Lobsters Management System!
         results.push({ success: false, method: 'email', error: error.message })
       }
       
-      // 4. Enregistrer dans les logs
+      // 4. Enregistrer dans les logs (sans base de données pour éviter les erreurs RLS)
       console.log('📊 Résultats des notifications admin:', results)
       
       return {

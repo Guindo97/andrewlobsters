@@ -131,10 +131,10 @@ const App = () => {
       <main className="pt-20 flex-1">
         {renderSection()}
       </main>
-      <Footer t={t} setCurrentSection={setCurrentSection} />
-      
-      {/* Statut des notifications admin */}
-      <AdminNotificationStatus />
+             <Footer t={t} setCurrentSection={setCurrentSection} />
+             
+             {/* Statut des notifications admin - uniquement sur la page Orders */}
+             {currentSection === 'orders' && <AdminNotificationStatus />}
     </div>
   );
 };

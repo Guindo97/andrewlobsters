@@ -1,16 +1,14 @@
 import { createClient } from '@supabase/supabase-js'
 
 // Configuration Supabase (GRATUIT)
-// Utilisation des variables d'environnement
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+// Utilisation des variables d'environnement avec fallback
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://robhxaqhxyhkqhvtorzn.supabase.co'
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJvYmh4YXFoeHloa3FodnRvcnpuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg2NzM3NTgsImV4cCI6MjA3NDI0OTc1OH0.TkkSoc3AviN39_8XeODGacVNXutujoEqkvGU_8BTaqE'
 
-// Vérification que les variables sont définies
-if (!supabaseUrl || !supabaseAnonKey) {
-  console.error('❌ Variables d\'environnement Supabase manquantes!')
-  console.error('VITE_SUPABASE_URL:', supabaseUrl ? 'Définie' : 'MANQUANTE')
-  console.error('VITE_SUPABASE_ANON_KEY:', supabaseAnonKey ? 'Définie' : 'MANQUANTE')
-}
+// Log des variables chargées
+console.log('🔧 Supabase Configuration:')
+console.log('URL:', supabaseUrl)
+console.log('Key:', supabaseAnonKey ? 'Présente' : 'MANQUANTE')
 
 // Créer le client Supabase
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
